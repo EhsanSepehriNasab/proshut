@@ -1,0 +1,96 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <span class="current"><%= t('contact_us') %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- Company Info -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="contact-company-top">
+                    <div class="contact-page-logo">
+                        <img src="/images/logo.jpg" alt="<%= settings.company_short %>">
+                    </div>
+                    <div class="contact-company-name">
+                        <h2><%= settings.company_name %></h2>
+                        <span class="contact-company-tag"><i class="fas fa-check-circle me-1"></i><%= t('manufacturer_tag') %></span>
+                    </div>
+                </div>
+                <p class="contact-page-desc mt-4"><%= settings.about_short || '' %></p>
+                <div class="contact-company-actions">
+                    <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="contact-wa-btn"><i class="fab fa-whatsapp me-2"></i><%= t('send_message') %></a>
+<div class="contact-page-social">
+                        <% if (settings.instagram) { %><a href="<%= settings.instagram %>" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a><% } %>
+                        <% if (settings.telegram) { %><a href="<%= settings.telegram %>" target="_blank" rel="noopener"><i class="fab fa-telegram"></i></a><% } %>
+                        <% if (settings.linkedin) { %><a href="<%= settings.linkedin %>" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a><% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="contact-info-grid">
+                    <div class="contact-info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong><%= t('office_address') %></strong>
+                            <span><%= settings.address %></span>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <strong><%= t('phone_number') %></strong>
+                            <span dir="ltr"><%= settings.phone %></span>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong><%= t('email') %></strong>
+                            <span><%= settings.email %></span>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong><%= t('working_hours') %></strong>
+                            <span><%= settings.working_hours %></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map -->
+<section class="section-padding bg-light" style="padding-top:0">
+    <div class="container" data-aos="fade-up">
+        <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);">
+            <iframe title="map-iframe" src="https://neshan.org/maps/iframe/places/400b2f90fc444b41d8b9e608c8f1dc3f/36.36877655657799/59.535292455739956" width="100%" height="400" style="border:0;display:block;" allowfullscreen loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- Contact City Skyline -->
+<section class="contact-home-section">
+    <div class="contact-home-inner" style="padding:0;background:#F8F9FA">
+        <div class="contact-skyline" style="position:relative;height:170px">
+            <img src="/images/apartments.png" class="skyline-img skyline-flip" style="right:calc(50% + 343px);height:80px;">
+            <img src="/images/apartments.png" class="skyline-img skyline-flip" style="right:calc(50% + 400px);height:40px;">
+            <img src="/images/city.png" class="skyline-img skyline-city" style="left:50%;transform:translateX(-50%);height:170px;">
+            <img src="/images/apartments.png" class="skyline-img" style="left:calc(50% + 343px);height:80px;">
+            <img src="/images/apartments.png" class="skyline-img" style="left:calc(50% + 400px);height:40px;">
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

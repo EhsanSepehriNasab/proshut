@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیام‌های تماس</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">پیام‌های تماس</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="card card-custom">
+                <div class="card-header">لیست پیام‌ها</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام</th>
+                                    <th>ایمیل</th>
+                                    <th>تلفن</th>
+                                    <th>موضوع</th>
+                                    <th>تاریخ</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (contacts && contacts.length > 0) { %>
+                                    <% contacts.forEach(function(contact, index) { %>
+                                        <tr class="<%= !contact.is_read ? 'unread-row' : '' %>">
+                                            <td><%= index + 1 %></td>
+                                            <td>
+                                                <% if (!contact.is_read) { %><i class="fas fa-circle text-danger" style="font-size: 8px; margin-left: 6px;"></i><% } %>
+                                                <%= contact.name %>
+                                            </td>
+                                            <td dir="ltr" class="text-end"><%= contact.email %></td>
+                                            <td dir="ltr" class="text-end"><%= contact.phone || '-' %></td>
+                                            <td><%= contact.subject %></td>
+                                            <td><%= new Date(contact.created_at).toLocaleDateString('fa-IR') %></td>
+                                            <td>
+                                                <% if (contact.is_read) { %>
+                                                    <span class="badge-status" style="background: #e8f5e9; color: #2e7d32;">خوانده شده</span>
+                                                <% } else { %>
+                                                    <span class="badge-status" style="background: #fce4ec; color: #c62828;">خوانده نشده</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/contacts/<%= contact.id %>" class="btn-view">
+                                                    <i class="fas fa-eye"></i> مشاهده
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr><td colspan="8" class="text-center text-muted py-4">پیامی وجود ندارد</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

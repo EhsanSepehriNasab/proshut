@@ -1,0 +1,80 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <span class="current"><%= t('page_not_found') %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- 404 Content -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center" data-aos="fade-up">
+                <div style="margin-bottom: 30px;">
+                    <span style="font-size: 8rem; font-weight: 900; color: var(--primary-color); line-height: 1; display: block;"><%= isEn ? '404' : '۴۰۴' %></span>
+                    <div style="width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto; border-radius: 2px;"></div>
+                </div>
+
+                <h2 style="font-weight: 800; margin-bottom: 15px; color: var(--dark-color);"><%= t('page_not_found') %>!</h2>
+                <p class="text-muted mb-4" style="font-size: 1.1rem; line-height: 2;">
+                    <%= isEn ? 'The page you are looking for does not exist or has been removed.' : 'متأسفانه صفحه‌ای که به دنبال آن هستید وجود ندارد یا حذف شده است.' %>
+                    <br><%= isEn ? 'Please check the URL or use the links below.' : 'لطفاً آدرس را بررسی کنید یا از لینک‌های زیر استفاده نمایید.' %>
+                </p>
+
+                <!-- Search -->
+                <form action="/search" method="GET" class="mb-4">
+                    <div class="input-group" style="max-width: 400px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);">
+                        <input type="search" name="q" class="form-control" placeholder="<%= isEn ? 'Search...' : 'جستجو کنید...' %>" style="border: none; padding: 12px 18px;">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+
+                <!-- Quick Links -->
+                <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+                    <a href="/" class="btn btn-primary"><i class="fas fa-home me-2"></i><%= t('home') %></a>
+                    <a href="/products" class="btn btn-outline-primary"><i class="fas fa-box me-2"></i><%= t('products') %></a>
+                    <a href="/contact" class="btn btn-outline-primary"><i class="fas fa-phone me-2"></i><%= t('contact_us') %></a>
+                </div>
+
+                <!-- Popular Pages -->
+                <div class="mt-5 pt-4" style="border-top: 1px solid var(--border-color);">
+                    <h5 style="font-weight: 700; margin-bottom: 15px;"><%= isEn ? 'Popular Pages' : 'صفحات پربازدید' %></h5>
+                    <div class="row g-3 justify-content-center">
+                        <div class="col-6 col-md-4">
+                            <a href="/products" style="display: block; background: var(--bg-light); padding: 15px; border-radius: var(--radius); color: var(--text-color); transition: var(--transition);"
+                               onmouseover="this.style.background='var(--primary-color)'; this.style.color='#fff';"
+                               onmouseout="this.style.background='var(--bg-light)'; this.style.color='var(--text-color)';">
+                                <i class="fas fa-box" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
+                                <%= t('products') %>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <a href="/services" style="display: block; background: var(--bg-light); padding: 15px; border-radius: var(--radius); color: var(--text-color); transition: var(--transition);"
+                               onmouseover="this.style.background='var(--primary-color)'; this.style.color='#fff';"
+                               onmouseout="this.style.background='var(--bg-light)'; this.style.color='var(--text-color)';">
+                                <i class="fas fa-concierge-bell" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
+                                <%= t('services') %>
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <a href="/blog" style="display: block; background: var(--bg-light); padding: 15px; border-radius: var(--radius); color: var(--text-color); transition: var(--transition);"
+                               onmouseover="this.style.background='var(--primary-color)'; this.style.color='#fff';"
+                               onmouseout="this.style.background='var(--bg-light)'; this.style.color='var(--text-color)';">
+                                <i class="fas fa-newspaper" style="font-size: 1.5rem; display: block; margin-bottom: 8px;"></i>
+                                <%= t('academy') %>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

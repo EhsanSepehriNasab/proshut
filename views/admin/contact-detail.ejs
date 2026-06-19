@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات پیام</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">جزئیات پیام</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="mb-3">
+                <a href="/admin/contacts" class="text-decoration-none link-accent">
+                    <i class="fas fa-arrow-right me-1"></i> بازگشت به لیست پیام‌ها
+                </a>
+            </div>
+
+            <div class="row g-4">
+                <!-- Contact Details -->
+                <div class="col-lg-8">
+                    <div class="card card-custom">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>اطلاعات پیام</span>
+                            <% if (contact.is_read) { %>
+                                <span class="badge-status" style="background: #e8f5e9; color: #2e7d32;">خوانده شده</span>
+                            <% } else { %>
+                                <span class="badge-status" style="background: #fce4ec; color: #c62828;">خوانده نشده</span>
+                            <% } %>
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-row">
+                                <div class="detail-label">نام فرستنده:</div>
+                                <div class="detail-value"><%= contact.name %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">ایمیل:</div>
+                                <div class="detail-value" dir="ltr" style="text-align: right;"><%= contact.email %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">تلفن:</div>
+                                <div class="detail-value" dir="ltr" style="text-align: right;"><%= contact.phone || '-' %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">موضوع:</div>
+                                <div class="detail-value"><%= contact.subject %></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">تاریخ ارسال:</div>
+                                <div class="detail-value"><%= new Date(contact.created_at).toLocaleDateString('fa-IR') %> - <%= new Date(contact.created_at).toLocaleTimeString('fa-IR') %></div>
+                            </div>
+                            <div class="mt-4">
+                                <label class="detail-label mb-2 d-block">متن پیام:</label>
+                                <div class="message-body">
+                                    <%= contact.message %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Note -->
+                <div class="col-lg-4">
+                    <div class="card card-custom">
+                        <div class="card-header">یادداشت مدیر</div>
+                        <div class="card-body">
+                            <form action="/admin/contacts/<%= contact.id %>/note" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label">یادداشت</label>
+                                    <textarea class="form-control" name="admin_note" rows="6" placeholder="یادداشت خود را بنویسید..."><%= contact.admin_note || '' %></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-accent w-100">
+                                    <i class="fas fa-save me-1"></i> ذخیره یادداشت
+                                </button>
+                            </form>
+
+                            <% if (!contact.is_read) { %>
+                                <form action="/admin/contacts/<%= contact.id %>/read" method="POST" class="mt-3">
+                                    <button type="submit" class="btn btn-outline-success w-100" style="border-radius: 8px; font-size: 13px; font-weight: 600;">
+                                        <i class="fas fa-check me-1"></i> علامت‌گذاری به عنوان خوانده شده
+                                    </button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد مدیریت</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">داشبورد</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- Stat Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #ADAB15, #8E8C10);">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.products %></h3>
+                            <p>محصولات</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.unreadContacts %></h3>
+                            <p>پیام‌های خوانده نشده</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                            <i class="fas fa-ticket"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.openTickets %></h3>
+                            <p>تیکت‌های باز</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.newsletterSubscribers %></h3>
+                            <p>اعضای خبرنامه</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <i class="fas fa-envelope-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.totalContacts %></h3>
+                            <p>کل پیام‌ها</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #1abc9c, #16a085);">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.totalTickets %></h3>
+                            <p>کل تیکت‌ها</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #e91e63, #c2185b);">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.blogPosts %></h3>
+                            <p>مقالات</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #607d8b, #455a64);">
+                            <i class="fas fa-copyright"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><%= stats.brands %></h3>
+                            <p>برندها</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Data -->
+            <div class="row g-4">
+                <!-- Recent Contacts -->
+                <div class="col-xl-6">
+                    <div class="card card-custom">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>آخرین پیام‌ها</span>
+                            <a href="/admin/contacts" class="btn btn-sm" style="color: #ADAB15; font-size: 13px;">مشاهده همه</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>نام</th>
+                                            <th>موضوع</th>
+                                            <th>تاریخ</th>
+                                            <th>وضعیت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (recentContacts && recentContacts.length > 0) { %>
+                                            <% recentContacts.forEach(function(contact) { %>
+                                                <tr>
+                                                    <td><%= contact.name %></td>
+                                                    <td><%= contact.subject %></td>
+                                                    <td><%= new Date(contact.created_at).toLocaleDateString('fa-IR') %></td>
+                                                    <td>
+                                                        <% if (contact.is_read) { %>
+                                                            <span class="badge-status" style="background: #e8f5e9; color: #2e7d32;">خوانده شده</span>
+                                                        <% } else { %>
+                                                            <span class="badge-status" style="background: #fce4ec; color: #c62828;">خوانده نشده</span>
+                                                        <% } %>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <tr><td colspan="4" class="text-center text-muted py-4">پیامی وجود ندارد</td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Tickets -->
+                <div class="col-xl-6">
+                    <div class="card card-custom">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>آخرین تیکت‌ها</span>
+                            <a href="/admin/tickets" class="btn btn-sm" style="color: #ADAB15; font-size: 13px;">مشاهده همه</a>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>نام</th>
+                                            <th>موضوع</th>
+                                            <th>تاریخ</th>
+                                            <th>وضعیت</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (recentTickets && recentTickets.length > 0) { %>
+                                            <% recentTickets.forEach(function(ticket) { %>
+                                                <tr>
+                                                    <td><%= ticket.name %></td>
+                                                    <td><%= ticket.subject %></td>
+                                                    <td><%= new Date(ticket.created_at).toLocaleDateString('fa-IR') %></td>
+                                                    <td>
+                                                        <% if (ticket.status === 'open') { %>
+                                                            <span class="badge-status" style="background: #fff3e0; color: #e65100;">باز</span>
+                                                        <% } else if (ticket.status === 'answered') { %>
+                                                            <span class="badge-status" style="background: #e8f5e9; color: #2e7d32;">پاسخ داده شده</span>
+                                                        <% } else { %>
+                                                            <span class="badge-status" style="background: #eceff1; color: #546e7a;">بسته شده</span>
+                                                        <% } %>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <tr><td colspan="4" class="text-center text-muted py-4">تیکتی وجود ندارد</td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

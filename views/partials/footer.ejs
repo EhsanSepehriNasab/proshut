@@ -1,0 +1,169 @@
+    </main>
+
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="newsletter-info">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <div>
+                            <h5><%= t('newsletter_title') %></h5>
+                            <span><%= t('newsletter_desc') %></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" name="email" placeholder="<%= t('newsletter_placeholder') %>" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> <%= t('newsletter_btn') %></button>
+                    </form>
+                    <div class="newsletter-msg" id="newsletterMsg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up">
+                        <div class="footer-widget footer-about">
+                            <a href="/"><img src="/images/white-logo.png" alt="<%= settings.company_short %>" class="footer-logo" width="150"></a>
+                            <p><%= settings.about_short || '' %></p>
+                            <div class="footer-social">
+                                <% if (settings.instagram) { %><a href="<%= settings.instagram %>" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a><% } %>
+                                <% if (settings.telegram) { %><a href="<%= settings.telegram %>" target="_blank" rel="noopener" aria-label="Telegram"><i class="fab fa-telegram"></i></a><% } %>
+                                <% if (settings.linkedin) { %><a href="<%= settings.linkedin %>" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><% } %>
+                                <% if (settings.whatsapp) { %><a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a><% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                        <div class="footer-widget">
+                            <h4><%= t('quick_access') %></h4>
+                            <ul>
+                                <li><a href="/"><%= t('home') %></a></li>
+                                <li><a href="/products"><%= t('products') %></a></li>
+                                <li><a href="/services"><%= t('services') %></a></li>
+                                <li><a href="/projects"><%= t('projects') %></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="footer-widget">
+                            <h4><%= t('our_services') %></h4>
+                            <ul>
+                                <li><a href="/services"><%= t('consulting') %></a></li>
+                                <li><a href="/services"><%= t('installation') %></a></li>
+                                <li><a href="/services"><%= t('maintenance') %></a></li>
+                                <li><a href="/support"><%= t('support') %></a></li>
+                                <li><a href="/blog"><%= t('academy') %></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="footer-widget">
+                            <h4><%= t('contact_info') %></h4>
+                            <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span><%= settings.address %></span></div>
+                            <div class="footer-contact-item"><i class="fas fa-phone-alt"></i><span dir="ltr"><%= settings.phone %></span></div>
+                            <% if (settings.phone2) { %><div class="footer-contact-item"><i class="fas fa-phone"></i><span dir="ltr"><%= settings.phone2 %></span></div><% } %>
+                            <div class="footer-contact-item"><i class="fas fa-envelope"></i><span><%= settings.email %></span></div>
+                            <div class="footer-contact-item"><i class="fas fa-clock"></i><span><%= settings.working_hours %></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6"><p>&copy; <%= isEn ? '2025' : '۱۴۰۴' %> <strong><%= settings.company_short %></strong>. <%= t('rights_reserved') %></p></div>
+                    <div class="col-md-6 text-md-start"><p><%= t('designed_with') %> <i class="fas fa-heart text-danger"></i></p></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/<%= settings.whatsapp %>" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scroll To Top (mobile only) -->
+    <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+        <img src="" alt="" id="lightboxImg">
+        <span class="lightbox-title" id="lightboxTitle"></span>
+    </div>
+
+    <script>
+    function openImage(src, title) {
+        if (!src) return;
+        var lb = document.getElementById('lightbox');
+        if (!lb) return;
+        var img = document.getElementById('lightboxImg');
+        img.src = '';
+        setTimeout(function() {
+            img.src = src;
+            document.getElementById('lightboxTitle').textContent = title || '';
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }, 10);
+    }
+    function closeLightbox() {
+        var lb = document.getElementById('lightbox');
+        if (!lb) return;
+        lb.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(function() { document.getElementById('lightboxImg').src = ''; }, 300);
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+
+    function shareProject(btn) {
+        var title = btn.getAttribute('data-title');
+        var url = location.origin + btn.getAttribute('data-url');
+        if (navigator.share) {
+            navigator.share({ title: title, text: title, url: url }).catch(function(){});
+        } else {
+            navigator.clipboard.writeText(url).then(function() {
+                var orig = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(function() { btn.innerHTML = orig; }, 1500);
+            });
+        }
+    }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="/js/main.js"></script>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="mobile-bottom-nav">
+        <a href="/" class="<%= currentPath === '/' ? 'active' : '' %>">
+            <i class="fas fa-home"></i><span><%= t('home') %></span>
+        </a>
+        <a href="/products" class="<%= currentPath === '/products' ? 'active' : '' %>">
+            <i class="fas fa-box"></i><span><%= t('products') %></span>
+        </a>
+        <a href="/services" class="<%= currentPath === '/services' ? 'active' : '' %>">
+            <i class="fas fa-concierge-bell"></i><span><%= t('services') %></span>
+        </a>
+        <a href="/projects" class="<%= currentPath === '/projects' ? 'active' : '' %>">
+            <i class="fas fa-project-diagram"></i><span><%= t('projects') %></span>
+        </a>
+        <a href="/contact" class="<%= currentPath === '/contact' ? 'active' : '' %>">
+            <i class="fas fa-phone"></i><span><%= t('contact') %></span>
+        </a>
+    </nav>
+</body>
+</html>

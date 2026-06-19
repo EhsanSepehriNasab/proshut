@@ -1,0 +1,272 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <a href="/products"><%= t('products') %></a>
+            <span>/</span>
+            <% if (parentCategory) { %>
+                <a href="/products?category=<%= parentCategory.slug %>"><%= parentCategory.name %></a>
+                <span>/</span>
+            <% } %>
+            <% if (product.category_name) { %>
+                <a href="/products?category=<%= product.category_slug || '' %>"><%= product.category_name %></a>
+                <span>/</span>
+            <% } %>
+            <span class="current"><%= product.name %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- Product Detail -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Product Gallery -->
+            <div class="col-lg-5" data-aos="fade-up">
+                <% if (galleryImages.length > 1) { %>
+                <!-- Main image carousel -->
+                <div id="productGallery" class="carousel slide mb-3" data-bs-ride="false">
+                    <div class="carousel-inner" style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border);">
+                        <% galleryImages.forEach((img, idx) => { %>
+                        <div class="carousel-item <%= idx === 0 ? 'active' : '' %>">
+                            <img src="<%= img %>" alt="<%= product.name %>" class="d-block w-100" style="height: 380px; object-fit: cover; cursor: zoom-in;" data-lightbox="<%= img %>" onerror="this.src='/images/no-image.svg'">
+                        </div>
+                        <% }); %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#productGallery" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#productGallery" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+                <!-- Thumbnails -->
+                <div class="d-flex gap-2 flex-wrap">
+                    <% galleryImages.forEach((img, idx) => { %>
+                    <img src="<%= img %>" alt="<%= isEn ? 'Image' : 'تصویر' %> <%= idx+1 %>"
+                         style="width: 72px; height: 72px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid <%= idx === 0 ? 'var(--primary)' : 'var(--border)' %>; transition: border-color 0.2s;"
+                         data-slide="<%= idx %>"
+                         onerror="this.src='/images/no-image.svg'"
+                         class="gallery-thumb">
+                    <% }); %>
+                </div>
+                <% } else { %>
+                <div class="product-detail-image" style="border-radius: 12px; overflow: hidden; cursor: zoom-in;" data-lightbox="<%= product.image %>">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" class="img-fluid" style="width:100%; height: 380px; object-fit: cover;" onerror="this.src='/images/no-image.svg'">
+                </div>
+                <% } %>
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
+                <div class="product-detail-info">
+                    <!-- Share + Badges Row -->
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="pd-badge pd-badge-category"><i class="fas fa-folder me-1"></i><%= product.category_name %></span>
+                            <% if (product.is_featured) { %>
+                            <span class="pd-badge pd-badge-featured"><i class="fas fa-star me-1"></i><%= isEn ? 'Featured Product' : 'محصول ویژه' %></span>
+                            <% } %>
+                            <% if (product.special_status && product.special_status.trim()) { %>
+                            <span class="pd-badge pd-badge-status"><i class="fas fa-info-circle me-1"></i><%= product.special_status %></span>
+                            <% } %>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <a href="https://wa.me/?text=<%= encodeURIComponent(product.name + ' - https://proshut.com/product/' + product.slug) %>" target="_blank" rel="noopener" class="share-btn-lg" title="<%= isEn ? 'WhatsApp' : 'واتساپ' %>"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://t.me/share/url?url=<%= encodeURIComponent('https://proshut.com/product/' + product.slug) %>&text=<%= encodeURIComponent(product.name) %>" target="_blank" rel="noopener" class="share-btn-lg" title="<%= isEn ? 'Telegram' : 'تلگرام' %>"><i class="fab fa-telegram"></i></a>
+                            <a href="https://twitter.com/intent/tweet?url=<%= encodeURIComponent('https://proshut.com/product/' + product.slug) %>&text=<%= encodeURIComponent(product.name) %>" target="_blank" rel="noopener" class="share-btn-lg" title="<%= isEn ? 'Twitter' : 'توییتر' %>"><i class="fab fa-twitter"></i></a>
+                            <button class="share-btn-lg" title="<%= isEn ? 'Copy Link' : 'کپی لینک' %>" onclick="navigator.clipboard.writeText('https://proshut.com/product/<%= product.slug %>');this.innerHTML='<i class=\'fas fa-check\'></i>';setTimeout(()=>this.innerHTML='<i class=\'fas fa-link\'></i>',1500)"><i class="fas fa-link"></i></button>
+                        </div>
+                    </div>
+
+                    <h2 style="font-weight: 800; margin-bottom: 8px;"><%= product.name %></h2>
+
+                    <% if (product.product_code && product.product_code.trim()) { %>
+                    <div class="mb-3">
+                        <small style="color: #888;"><%= isEn ? 'Product Code:' : 'کد محصول:' %></small>
+                        <strong style="color: var(--text); font-size:.85rem; margin-right:8px;" dir="ltr"><%= product.product_code %></strong>
+                    </div>
+                    <% } %>
+
+                    <% if (product.short_description && product.short_description.trim()) { %>
+                    <div class="product-description mb-3" style="background: var(--bg-light); padding: 15px; border-radius: 8px; border-right: 3px solid var(--primary);">
+                        <p style="margin: 0; font-size: 0.95rem; line-height: 1.8;"><%= product.short_description %></p>
+                    </div>
+                    <% } else if (product.description) { %>
+                    <div class="product-description mb-3">
+                        <p><%- product.description %></p>
+                    </div>
+                    <% } %>
+
+                    <% if (product.specs) { %>
+                    <div class="product-specs mb-4">
+                        <h5 class="mb-3"><i class="fas fa-cogs me-2"></i><%= t('specs') %></h5>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-sm">
+                                <tbody>
+                                    <%
+                                        var specParts = product.specs.split('|');
+                                        for (var s = 0; s < specParts.length - 1; s += 2) {
+                                    %>
+                                    <tr>
+                                        <td style="font-weight: 700; width: 40%; background: var(--bg-light);"><%= specParts[s] %></td>
+                                        <td><%= specParts[s+1] %></td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-3 d-flex gap-3 flex-wrap">
+                        <a href="/contact" class="pd-action-btn pd-action-primary"><i class="fas fa-phone-alt me-2"></i><%= isEn ? 'Price Inquiry' : 'استعلام قیمت' %></a>
+                        <a href="https://wa.me/<%= settings.whatsapp %>?text=<%= isEn ? 'Hello, I would like information about ' + encodeURIComponent(product.name) : 'سلام، درباره محصول ' + encodeURIComponent(product.name) + ' اطلاعات می‌خواهم' %>" target="_blank" rel="noopener" class="pd-action-btn pd-action-whatsapp"><i class="fab fa-whatsapp me-2"></i><%= isEn ? 'WhatsApp Order' : 'سفارش واتساپ' %></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full Description -->
+        <% if (product.full_description && product.full_description.trim()) { %>
+        <div class="row mt-5" data-aos="fade-up">
+            <div class="col-12">
+                <div class="full-desc-content">
+                    <%- product.full_description %>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+        <!-- Tags & Sections -->
+        <% if (tags.length > 0 || sections.length > 0) { %>
+        <div class="row mt-4" data-aos="fade-up">
+            <% if (tags.length > 0) { %>
+            <div class="col-md-6 mb-3">
+                <strong><i class="fas fa-tags me-2" style="color: var(--primary);"></i><%= isEn ? 'Tags:' : 'برچسب‌ها:' %></strong>
+                <div class="mt-2 d-flex flex-wrap gap-2">
+                    <% tags.forEach(tag => { %>
+                    <a href="/search?q=<%= encodeURIComponent(tag) %>" class="badge" style="background: var(--bg-light); color: var(--text); font-weight: 400; font-size: 0.85rem; padding: 6px 12px; border-radius: 20px; text-decoration: none; border: 1px solid var(--border); transition: all 0.2s;"
+                       onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='var(--bg-light)';this.style.color='var(--text)'">
+                        <%= tag %>
+                    </a>
+                    <% }); %>
+                </div>
+            </div>
+            <% } %>
+            <% if (sections.length > 0) { %>
+            <div class="col-md-6 mb-3">
+                <strong><i class="fas fa-folder-open me-2" style="color: var(--primary);"></i><%= isEn ? 'Sections:' : 'بخش‌ها:' %></strong>
+                <div class="mt-2 d-flex flex-wrap gap-2">
+                    <% sections.forEach(sec => { %>
+                    <span class="badge" style="background: var(--primary); color: #fff; font-weight: 400; font-size: 0.85rem; padding: 6px 12px; border-radius: 20px;"><%= sec %></span>
+                    <% }); %>
+                </div>
+            </div>
+            <% } %>
+        </div>
+        <% } %>
+        <!-- Comments -->
+        <div class="row mt-5" id="comments" data-aos="fade-up">
+            <div class="col-12">
+                <h4 style="font-weight:700;margin-bottom:20px;"><i class="fas fa-comments me-2" style="color:var(--primary);"></i><%= isEn ? 'Reviews' : 'دیدگاه‌ها' %></h4>
+
+                <% if (comments.length === 0) { %>
+                <div class="text-center py-4" style="color: var(--text-light);">
+                    <i class="fas fa-comments" style="font-size: 2.5rem; opacity: 0.3; margin-bottom: 10px; display:block;"></i>
+                    <p><%= isEn ? 'Be the first to leave a review!' : 'اولین نفری باشید که نظر می‌دهد!' %></p>
+                </div>
+                <% } else { %>
+                <div class="comments-list mb-4">
+                    <% comments.forEach(c => { %>
+                    <div style="background: var(--bg-light); border-radius: 10px; padding: 18px; margin-bottom: 12px;">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); display: flex; align-items: center; justify-content: center; color: var(--dark); font-weight: 700; font-size: .85rem;"><%= c.name.charAt(0) %></div>
+                                <strong style="font-size:.9rem;"><%= c.name %></strong>
+                            </div>
+                            <small style="color: var(--text-light); font-size: 0.78rem;"><%= new Date(c.created_at).toLocaleDateString(isEn ? 'en-US' : 'fa-IR') %></small>
+                        </div>
+                        <p style="margin: 0; line-height: 1.8; font-size: 0.88rem; color: var(--text);"><%- c.comment %></p>
+                        <% if (c.admin_reply) { %>
+                        <div style="margin-top:12px;padding:12px 14px;background:#fff;border-radius:8px;border-right:3px solid var(--primary);">
+                            <div class="d-flex align-items-center gap-2 mb-1">
+                                <div style="width:28px;height:28px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;"><i class="fas fa-headset"></i></div>
+                                <strong style="font-size:.82rem;color:var(--secondary);"><%= isEn ? 'Proshut Reply' : 'پاسخ پروشات' %></strong>
+                                <% if (c.replied_at) { %>
+                                <small style="color:var(--text-light);font-size:.72rem;margin-right:auto;"><%= new Date(c.replied_at).toLocaleDateString(isEn ? 'en-US' : 'fa-IR') %></small>
+                                <% } %>
+                            </div>
+                            <p style="margin:0;line-height:1.8;font-size:.85rem;color:var(--text);"><%- c.admin_reply %></p>
+                        </div>
+                        <% } %>
+                    </div>
+                    <% }); %>
+                </div>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comment Form (full width) -->
+<section id="comment-form" style="background: var(--bg-light); padding: 40px 0;">
+    <div class="container">
+        <% if (commentSuccess) { %>
+        <div class="alert alert-success mb-3"><i class="fas fa-check-circle me-2"></i><%= isEn ? 'Your review has been submitted and will be displayed after approval.' : 'نظر شما ثبت شد و پس از تأیید نمایش داده می‌شود.' %></div>
+        <% } %>
+        <% if (commentError) { %>
+        <div class="alert alert-danger mb-3"><i class="fas fa-exclamation-circle me-2"></i><%= commentError %></div>
+        <% } %>
+        <h5 style="font-weight: 700; margin-bottom: 18px;"><i class="fas fa-pencil-alt me-2" style="color: var(--primary);"></i><%= isEn ? 'Submit Review' : 'ثبت نظر' %></h5>
+        <form action="/product/<%= product.slug %>/comment" method="POST">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" style="font-size:.85rem;"><%= isEn ? 'Name' : 'نام' %> <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="name" required placeholder="<%= isEn ? 'Your name' : 'نام شما' %>">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" style="font-size:.85rem;"><%= isEn ? 'Email' : 'ایمیل' %> <small class="text-muted">(<%= isEn ? 'optional' : 'اختیاری' %>)</small></label>
+                    <input type="email" class="form-control" name="email" dir="ltr" placeholder="example@email.com">
+                </div>
+                <div class="col-12">
+                    <label class="form-label" style="font-size:.85rem;"><%= isEn ? 'Your Review' : 'نظر شما' %> <span class="text-danger">*</span></label>
+                    <textarea class="form-control" name="comment" rows="3" required placeholder="<%= isEn ? 'Write your review...' : 'نظر خود را بنویسید...' %>"></textarea>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i><%= isEn ? 'Submit Review' : 'ثبت نظر' %></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<!-- CTA Section -->
+<section style="background: var(--bg-light); padding: 30px 0 80px;">
+    <div class="container">
+        <div class="cta-section text-center" data-aos="fade-up">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-8">
+                    <h3><%= isEn ? 'Need Consultation?' : 'به مشاوره نیاز دارید؟' %></h3>
+                    <p><%= isEn ? 'Our experts are ready to answer your questions' : 'کارشناسان ما آماده پاسخگویی به سوالات شما هستند' %></p>
+                    <a href="/contact" class="btn btn-lg mt-3"><i class="fas fa-phone-alt me-2"></i><%= isEn ? 'Contact Us' : 'تماس با ما' %></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div id="lightboxModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; align-items:center; justify-content:center; cursor:pointer;">
+    <img id="lightboxImg" src="" alt="" style="max-width:90%; max-height:90%; border-radius:8px;">
+    <button style="position:absolute;top:20px;right:20px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;" aria-label="<%= isEn ? 'Close' : 'بستن' %>"><i class="fas fa-times"></i></button>
+</div>
+
+<%- include('../partials/footer') %>

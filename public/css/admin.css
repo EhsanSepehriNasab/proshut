@@ -1,0 +1,171 @@
+/* ═══════════════════════════════════════════
+   Proshut Aria – Admin Panel Styles
+   Color: #FFFFFF #ADAB15 #ACAC15 #121111
+   ═══════════════════════════════════════════ */
+
+* { font-family: 'Vazirmatn', sans-serif; }
+body { background: #f5f5f3; margin: 0; }
+
+/* ── Sidebar ── */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 260px;
+    height: 100vh;
+    background: #121111;
+    z-index: 1000;
+    overflow-y: auto;
+    transition: all 0.3s;
+}
+.sidebar-logo {
+    padding: 24px 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.sidebar-logo h4 { color: #ADAB15; font-weight: 800; margin: 0; font-size: 18px; }
+.sidebar-logo small { color: rgba(255,255,255,0.35); font-size: 11px; }
+.sidebar-menu { padding: 16px 0; list-style: none; margin: 0; }
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-right: 3px solid transparent;
+}
+.sidebar-menu li a:hover,
+.sidebar-menu li a.active {
+    color: #fff;
+    background: rgba(173,171,21,0.12);
+    border-right-color: #ADAB15;
+}
+.sidebar-menu li a.active { color: #ADAB15; }
+.sidebar-menu li a i { width: 20px; text-align: center; font-size: 15px; }
+
+/* ── Main Content ── */
+.main-content { margin-right: 260px; min-height: 100vh; }
+
+/* ── Topbar ── */
+.topbar {
+    background: #fff;
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+.topbar .page-title { font-size: 18px; font-weight: 700; color: #121111; }
+.topbar .admin-info { display: flex; align-items: center; gap: 12px; }
+.topbar .admin-info .admin-name { font-size: 14px; font-weight: 600; color: #333; }
+.topbar .admin-info .btn-logout { color: #e74c3c; font-size: 13px; text-decoration: none; font-weight: 500; }
+
+/* ── Content Area ── */
+.content-area { padding: 30px; }
+
+/* ── Stat Cards ── */
+.stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); }
+.stat-card .stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+}
+.stat-card .stat-info h3 { font-size: 26px; font-weight: 800; margin: 0; color: #121111; }
+.stat-card .stat-info p { margin: 0; font-size: 13px; color: #888; font-weight: 500; }
+
+/* ── Cards ── */
+.card-custom {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border: none;
+}
+.card-custom .card-header {
+    background: transparent;
+    border-bottom: 1px solid #f0f0f0;
+    padding: 18px 24px;
+    font-weight: 700;
+    font-size: 15px;
+    color: #121111;
+}
+
+/* ── Tables ── */
+.table { font-size: 13px; }
+.table th { font-weight: 700; color: #555; border-bottom: 2px solid #f0f0f0; padding: 12px 16px; }
+.table td { padding: 12px 16px; vertical-align: middle; color: #333; }
+
+/* ── Buttons ── */
+.btn-accent { background: #ADAB15; color: #121111; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; padding: 8px 18px; }
+.btn-accent:hover { background: #8E8C10; color: #121111; }
+.btn-action { padding: 4px 10px; border-radius: 6px; font-size: 12px; border: none; cursor: pointer; }
+.btn-view { padding: 4px 12px; border-radius: 6px; font-size: 12px; border: none; background: #ADAB15; color: #121111; text-decoration: none; font-weight: 600; }
+.btn-view:hover { background: #8E8C10; color: #121111; }
+
+/* ── Forms ── */
+.form-control, .form-select { border-radius: 8px; font-size: 13px; border: 2px solid #e9ecef; }
+.form-control:focus, .form-select:focus { border-color: #ADAB15; box-shadow: 0 0 0 0.2rem rgba(173,171,21,0.15); }
+.form-label { font-weight: 600; font-size: 13px; color: #444; }
+
+/* ── Badges ── */
+.badge-status { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+
+/* ── Modals ── */
+.modal-content { border-radius: 14px; }
+.modal-header { border-bottom: 1px solid #f0f0f0; }
+.modal-footer { border-top: 1px solid #f0f0f0; }
+
+/* ── Detail View ── */
+.detail-row { display: flex; padding: 14px 0; border-bottom: 1px solid #f5f5f5; }
+.detail-label { width: 140px; font-weight: 700; color: #555; font-size: 13px; flex-shrink: 0; }
+.detail-value { font-size: 14px; color: #333; }
+.message-body { background: #f8f9fa; border-radius: 10px; padding: 20px; font-size: 14px; line-height: 2; color: #333; }
+
+/* ── Ticket Messages ── */
+.message-bubble { border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; font-size: 14px; line-height: 1.8; }
+.message-user { background: #f0f2f5; border-right: 4px solid #3498db; }
+.message-admin { background: #f5f5e6; border-right: 4px solid #ADAB15; }
+.message-sender { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+.message-date { font-size: 11px; color: #999; }
+
+/* ── Filter Buttons ── */
+.filter-btn {
+    padding: 8px 20px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    border: 2px solid #e9ecef; background: #fff; color: #555; text-decoration: none;
+    transition: all 0.2s;
+}
+.filter-btn:hover { border-color: #ADAB15; color: #ADAB15; }
+.filter-btn.active { background: #ADAB15; color: #121111; border-color: #ADAB15; }
+
+/* ── Misc ── */
+.unread-row { background: #fafaf0; font-weight: 600; }
+.slider-thumb { width: 120px; height: 60px; object-fit: cover; border-radius: 8px; }
+.link-accent { color: #ADAB15; font-size: 14px; font-weight: 600; text-decoration: none; }
+.link-accent:hover { color: #8E8C10; }
+
+/* ── Responsive ── */
+@media (max-width: 992px) {
+    .sidebar { display: none; }
+    .main-content { margin-right: 0; }
+}

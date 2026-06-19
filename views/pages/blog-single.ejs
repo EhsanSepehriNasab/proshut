@@ -1,0 +1,136 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <a href="/blog"><%= t('academy') %></a>
+            <span>/</span>
+            <span class="current"><%= post.title %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- Blog Content -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main Content -->
+            <div class="col-lg-8" data-aos="fade-up">
+                <article style="background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;">
+                    <% if (post.image) { %>
+                    <div style="height: 400px; overflow: hidden;">
+                        <img src="<%= post.image %>" alt="<%= post.title %>" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=1200&q=80'">
+                    </div>
+                    <% } %>
+                    <div style="padding: 30px;">
+                        <!-- Meta Info -->
+                        <div class="d-flex flex-wrap gap-3 mb-4" style="font-size: 0.85rem; color: var(--text-light);">
+                            <span><i class="fas fa-calendar-alt me-1" style="color: var(--primary-color);"></i><%= new Date(post.created_at).toLocaleDateString(isEn ? 'en-US' : 'fa-IR') %></span>
+                            <% if (post.category) { %>
+                            <span><i class="fas fa-folder me-1" style="color: var(--primary-color);"></i><%= post.category %></span>
+                            <% } %>
+                            <% if (post.author) { %>
+                            <span><i class="fas fa-user me-1" style="color: var(--primary-color);"></i><%= post.author %></span>
+                            <% } %>
+                        </div>
+
+                        <h2 style="font-weight: 800; margin-bottom: 20px; line-height: 1.6;"><%= post.title %></h2>
+
+                        <!-- Post Content -->
+                        <div style="line-height: 2.2; color: var(--text-color); font-size: 1rem;">
+                            <%- post.content || post.body || '' %>
+                        </div>
+
+                        <!-- Tags -->
+                        <% if (post.tags) { %>
+                        <div class="mt-4 pt-3" style="border-top: 1px solid var(--border-color);">
+                            <i class="fas fa-tags me-2" style="color: var(--primary-color);"></i>
+                            <% post.tags.split(',').forEach(tag => { %>
+                            <span style="display: inline-block; background: var(--bg-light); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; margin: 3px; color: var(--text-light);"><%= tag.trim() %></span>
+                            <% }); %>
+                        </div>
+                        <% } %>
+
+                        <!-- Share -->
+                        <div class="mt-4 pt-3 d-flex align-items-center flex-wrap gap-3" style="border-top: 1px solid var(--border-color);">
+                            <span style="font-weight: 700;"><%= t('share') %>:</span>
+                            <div class="social-links">
+                                <a href="https://t.me/share/url?url=<%= encodeURIComponent(settings.company_en ? 'https://proshut.com' : '') + currentPath %>&text=<%= encodeURIComponent(post.title) %>" target="_blank" rel="noopener" style="width: 38px; height: 38px; font-size: 1rem;"><i class="fab fa-telegram"></i></a>
+                                <a href="https://wa.me/?text=<%= encodeURIComponent(post.title + ' ' + (settings.company_en ? 'https://proshut.com' : '') + currentPath) %>" target="_blank" rel="noopener" style="width: 38px; height: 38px; font-size: 1rem;"><i class="fab fa-whatsapp"></i></a>
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url=<%= encodeURIComponent((settings.company_en ? 'https://proshut.com' : '') + currentPath) %>" target="_blank" rel="noopener" style="width: 38px; height: 38px; font-size: 1rem;"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="javascript:void(0)" onclick="copyBlogLink(this)" style="width: 38px; height: 38px; font-size: 1rem;" title="<%= isEn ? 'Copy link' : 'کپی لینک' %>"><i class="fas fa-link"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- Related Posts -->
+                <% if (typeof relatedPosts !== 'undefined' && relatedPosts.length > 0) { %>
+                <div class="sidebar-widget mb-4">
+                    <h4><%= t('related_posts') %></h4>
+                    <% relatedPosts.forEach(rp => { %>
+                    <div class="related-post-item">
+                        <div class="related-post-img">
+                            <img src="<%= rp.image %>" alt="<%= rp.title %>" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=200&q=80'">
+                        </div>
+                        <div class="related-post-text">
+                            <h6><a href="/blog/<%= rp.slug %>"><%= rp.title %></a></h6>
+                            <small><%= new Date(rp.created_at).toLocaleDateString(isEn ? 'en-US' : 'fa-IR') %></small>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                <% } %>
+
+                <!-- Categories Widget -->
+                <div class="sidebar-widget mb-4">
+                    <h4><%= t('categories_widget') %></h4>
+                    <ul class="category-list">
+                        <% categories.forEach(cat => { %>
+                        <li><a href="/products?category=<%= cat.slug %>"><i class="<%= cat.icon %>"></i> <%= cat.name %></a></li>
+                        <% }); %>
+                    </ul>
+                </div>
+
+                <!-- CTA Widget -->
+                <div class="sidebar-cta">
+                    <div class="sidebar-cta-bg"></div>
+                    <div class="sidebar-cta-content">
+                        <div class="sidebar-cta-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h5><%= t('have_question') %></h5>
+                        <p><%= t('experts_answering') %></p>
+                        <div class="sidebar-cta-phone">
+                            <i class="fas fa-phone-alt"></i>
+                            <span dir="ltr"><%= settings.phone %></span>
+                        </div>
+                        <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="sidebar-cta-btn">
+                            <i class="fab fa-whatsapp me-2"></i><%= t('send_message') %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function copyBlogLink(el) {
+    navigator.clipboard.writeText(window.location.href).then(function() {
+        var orig = el.innerHTML;
+        el.innerHTML = '<i class="fas fa-check"></i>';
+        el.style.background = 'var(--primary)';
+        el.style.color = 'var(--dark)';
+        setTimeout(function() { el.innerHTML = orig; el.style.background = ''; el.style.color = ''; }, 1500);
+    });
+}
+</script>
+
+<%- include('../partials/footer') %>

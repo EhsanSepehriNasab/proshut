@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت اسلایدر</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">مدیریت اسلایدر</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="row g-4">
+                <!-- Add Slider Form -->
+                <div class="col-lg-4">
+                    <div class="card card-custom">
+                        <div class="card-header">افزودن اسلاید جدید</div>
+                        <div class="card-body">
+                            <form action="/admin/sliders" method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label class="form-label">عنوان</label>
+                                    <input type="text" class="form-control" name="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">توضیحات</label>
+                                    <textarea class="form-control" name="description" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">لینک</label>
+                                    <input type="text" class="form-control" name="link" dir="ltr" placeholder="https://...">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">تصویر اسلاید</label>
+                                    <input type="file" class="form-control" name="image" accept="image/*" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">ترتیب نمایش</label>
+                                    <input type="number" class="form-control" name="sort_order" value="0" min="0">
+                                </div>
+                                <button type="submit" class="btn btn-accent w-100">
+                                    <i class="fas fa-plus me-1"></i> افزودن اسلاید
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sliders List -->
+                <div class="col-lg-8">
+                    <div class="card card-custom">
+                        <div class="card-header">لیست اسلایدها</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>تصویر</th>
+                                            <th>عنوان</th>
+                                            <th>لینک</th>
+                                            <th>ترتیب</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (sliders && sliders.length > 0) { %>
+                                            <% sliders.forEach(function(slider, index) { %>
+                                                <tr>
+                                                    <td><%= index + 1 %></td>
+                                                    <td>
+                                                        <% if (slider.image) { %>
+                                                            <img src="<%= slider.image %>" alt="<%= slider.title %>" class="slider-thumb">
+                                                        <% } else { %>
+                                                            <span class="text-muted">-</span>
+                                                        <% } %>
+                                                    </td>
+                                                    <td><%= slider.title %></td>
+                                                    <td>
+                                                        <% if (slider.link) { %>
+                                                            <a href="<%= slider.link %>" target="_blank" dir="ltr" style="font-size: 12px; color: #3498db;"><%= slider.link.substring(0, 30) %>...</a>
+                                                        <% } else { %>
+                                                            <span class="text-muted">-</span>
+                                                        <% } %>
+                                                    </td>
+                                                    <td><%= slider.sort_order || 0 %></td>
+                                                    <td>
+                                                        <form action="/admin/sliders/<%= slider.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('آیا از حذف این اسلاید مطمئن هستید؟')">
+                                                            <button type="submit" class="btn-action text-white" style="background: #e74c3c;">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <tr><td colspan="6" class="text-center text-muted py-4">اسلایدی وجود ندارد</td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت محصولات</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">مدیریت محصولات</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="card card-custom">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>لیست محصولات</span>
+                    <div class="d-flex gap-2">
+                        <a href="/admin/comments" class="btn btn-outline-secondary btn-sm"><i class="fas fa-comments me-1"></i> نظرات</a>
+                        <button class="btn btn-accent" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                            <i class="fas fa-plus me-1"></i> افزودن محصول
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>تصویر</th>
+                                    <th>نام محصول</th>
+                                    <th>کد</th>
+                                    <th>دسته‌بندی</th>
+                                    <th>وضعیت خاص</th>
+                                    <th>ویژه</th>
+                                    <th>فعال</th>
+                                    <th>بازدید</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (products && products.length > 0) { %>
+                                    <% products.forEach(function(product, index) { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><img src="<%= product.image || '/images/no-image.svg' %>" alt="" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" onerror="this.src='/images/no-image.svg'"></td>
+                                            <td>
+                                                <strong><%= product.name %></strong>
+                                                <% if (product.short_description) { %>
+                                                <br><small class="text-muted" style="font-size:0.75rem;"><%= product.short_description.substring(0,50) %>...</small>
+                                                <% } %>
+                                            </td>
+                                            <td><small dir="ltr"><%= product.product_code || '-' %></small></td>
+                                            <td><%= product.category_name || '-' %></td>
+                                            <td>
+                                                <% if (product.special_status) { %>
+                                                    <span class="badge-status" style="background: #e3f2fd; color: #1565c0;"><%= product.special_status %></span>
+                                                <% } else { %>
+                                                    <span class="text-muted">-</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if (product.is_featured) { %>
+                                                    <span class="badge-status" style="background: #fff8e1; color: #f57f17;"><i class="fas fa-star"></i></span>
+                                                <% } else { %>
+                                                    <span class="text-muted">-</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if (product.is_active) { %>
+                                                    <span class="badge-status" style="background: #e8f5e9; color: #2e7d32;">فعال</span>
+                                                <% } else { %>
+                                                    <span class="badge-status" style="background: #fce4ec; color: #c62828;">غیرفعال</span>
+                                                <% } %>
+                                            </td>
+                                            <td><%= product.views || 0 %></td>
+                                            <td>
+                                                <button class="btn-action text-white me-1" style="background: #3498db;"
+                                                    data-bs-toggle="modal" data-bs-target="#editProductModal"
+                                                    onclick="fillEditForm(<%= JSON.stringify(product).replace(/</g, '\\u003c') %>)">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <form action="/admin/products/<%= product.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('آیا از حذف این محصول مطمئن هستید؟')">
+                                                    <button type="submit" class="btn-action text-white" style="background: #e74c3c;">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr><td colspan="10" class="text-center text-muted py-4">محصولی وجود ندارد</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight: 700;">افزودن محصول جدید</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="/admin/products" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs mb-3" id="addTabs">
+                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#addBasic">اطلاعات پایه</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addDesc">توضیحات</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addMedia">تصاویر</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addSeo">SEO</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#addEnglish"><i class="fas fa-globe me-1"></i> English</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Basic Tab -->
+                            <div class="tab-pane fade show active" id="addBasic">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">نام محصول <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">اسلاگ (URL)</label>
+                                        <input type="text" class="form-control" name="slug" dir="ltr">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">دسته‌بندی</label>
+                                        <select class="form-select" name="category_id">
+                                            <option value="">انتخاب دسته‌بندی</option>
+                                            <% if (categories && categories.length > 0) { %>
+                                                <% categories.forEach(function(cat) { %>
+                                                    <option value="<%= cat.id %>"><%= cat.parent_id ? '└ ' : '' %><%= cat.name %></option>
+                                                <% }); %>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">کد محصول</label>
+                                        <input type="text" class="form-control" name="product_code" dir="ltr" placeholder="مثال: PB-001">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">وضعیت خاص</label>
+                                        <input type="text" class="form-control" name="special_status" placeholder="مثال: موجود، ناموجود، حداقل ۵ عدد">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">توضیح کوتاه</label>
+                                        <textarea class="form-control" name="short_description" rows="2" placeholder="یک جمله خلاصه از محصول"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">مشخصات فنی <small class="text-muted">(فرمت: نام|مقدار|نام|مقدار)</small></label>
+                                        <textarea class="form-control" name="specs" rows="3" dir="ltr" placeholder="جنس|فولاد|وزن|45 کیلوگرم|رنگ|مشکی"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">برچسب‌ها <small class="text-muted">(با ویرگول جدا کنید)</small></label>
+                                        <input type="text" class="form-control" name="tags" placeholder="نیمکت,پارکی,فلزی">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">بخش‌ها <small class="text-muted">(با ویرگول جدا کنید)</small></label>
+                                        <input type="text" class="form-control" name="sections" placeholder="مبلمان شهری,نیمکت پارکی">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="is_featured" id="addFeatured" value="1">
+                                            <label class="form-check-label" for="addFeatured">محصول ویژه</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Description Tab -->
+                            <div class="tab-pane fade" id="addDesc">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label">توضیحات ساده</label>
+                                        <textarea class="form-control" name="description" rows="4" placeholder="توضیح متوسط برای لیست محصولات"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">توضیحات کامل <small class="text-muted">(HTML پشتیبانی می‌شود)</small></label>
+                                        <textarea class="form-control" name="full_description" rows="12" placeholder="<p>توضیحات کامل با HTML...</p><ul><li>...</li></ul>"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Media Tab -->
+                            <div class="tab-pane fade" id="addMedia">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">تصویر اصلی</label>
+                                        <input type="file" class="form-control" name="image" accept="image/*">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">گالری تصاویر <small class="text-muted">(چند فایل)</small></label>
+                                        <input type="file" class="form-control" name="gallery" accept="image/*" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- SEO Tab -->
+                            <div class="tab-pane fade" id="addSeo">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label">عنوان متا (SEO)</label>
+                                        <input type="text" class="form-control" name="meta_title">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">توضیحات متا (SEO)</label>
+                                        <textarea class="form-control" name="meta_description" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- English Tab -->
+                            <div class="tab-pane fade" id="addEnglish">
+                                <div class="alert alert-info small"><i class="fas fa-info-circle me-1"></i> Enter English translations for this product. Leave empty to use Persian text.</div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Product Name (EN)</label>
+                                        <input type="text" class="form-control" name="name_en" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Short Description (EN)</label>
+                                        <input type="text" class="form-control" name="short_description_en" dir="ltr">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Description (EN)</label>
+                                        <textarea class="form-control" name="description_en" rows="3" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Full Description (EN) <small class="text-muted">(HTML supported)</small></label>
+                                        <textarea class="form-control" name="full_description_en" rows="8" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Technical Specs (EN) <small class="text-muted">(name|value|name|value)</small></label>
+                                        <textarea class="form-control" name="specs_en" rows="3" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Tags (EN)</label>
+                                        <input type="text" class="form-control" name="tags_en" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Sections (EN)</label>
+                                        <input type="text" class="form-control" name="sections_en" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Meta Title (EN)</label>
+                                        <input type="text" class="form-control" name="meta_title_en" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Meta Description (EN)</label>
+                                        <input type="text" class="form-control" name="meta_description_en" dir="ltr">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-accent">ذخیره محصول</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="modal fade" id="editProductModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" style="font-weight: 700;">ویرایش محصول</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="editProductForm" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs mb-3" id="editTabs">
+                            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#editBasic">اطلاعات پایه</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#editDesc">توضیحات</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#editMedia">تصاویر</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#editSeo">SEO</a></li>
+                            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#editEnglish"><i class="fas fa-globe me-1"></i> English</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Basic Tab -->
+                            <div class="tab-pane fade show active" id="editBasic">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">نام محصول <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="name" id="editName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">اسلاگ (URL)</label>
+                                        <input type="text" class="form-control" name="slug" id="editSlug" dir="ltr">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">دسته‌بندی</label>
+                                        <select class="form-select" name="category_id" id="editCategory">
+                                            <option value="">انتخاب دسته‌بندی</option>
+                                            <% if (categories && categories.length > 0) { %>
+                                                <% categories.forEach(function(cat) { %>
+                                                    <option value="<%= cat.id %>"><%= cat.parent_id ? '└ ' : '' %><%= cat.name %></option>
+                                                <% }); %>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">کد محصول</label>
+                                        <input type="text" class="form-control" name="product_code" id="editProductCode" dir="ltr">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">وضعیت خاص</label>
+                                        <input type="text" class="form-control" name="special_status" id="editSpecialStatus">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">توضیح کوتاه</label>
+                                        <textarea class="form-control" name="short_description" id="editShortDesc" rows="2"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">مشخصات فنی</label>
+                                        <textarea class="form-control" name="specs" id="editSpecs" rows="3" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">برچسب‌ها</label>
+                                        <input type="text" class="form-control" name="tags" id="editTags">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">بخش‌ها</label>
+                                        <input type="text" class="form-control" name="sections" id="editSections">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="is_featured" id="editFeatured" value="1">
+                                            <label class="form-check-label" for="editFeatured">محصول ویژه</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="is_active" id="editActive" value="1">
+                                            <label class="form-check-label" for="editActive">فعال</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Description Tab -->
+                            <div class="tab-pane fade" id="editDesc">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label">توضیحات ساده</label>
+                                        <textarea class="form-control" name="description" id="editDescription" rows="4"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">توضیحات کامل <small class="text-muted">(HTML پشتیبانی می‌شود)</small></label>
+                                        <textarea class="form-control" name="full_description" id="editFullDesc" rows="12"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Media Tab -->
+                            <div class="tab-pane fade" id="editMedia">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">تصویر اصلی فعلی</label>
+                                        <div id="editCurrentImage" class="mb-2"></div>
+                                        <label class="form-label">تغییر تصویر اصلی</label>
+                                        <input type="file" class="form-control" name="image" accept="image/*">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">تصاویر گالری فعلی</label>
+                                        <div id="editCurrentGallery" class="d-flex flex-wrap gap-2 mb-2"></div>
+                                        <label class="form-label">افزودن تصاویر جدید به گالری</label>
+                                        <input type="file" class="form-control" name="gallery" accept="image/*" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- SEO Tab -->
+                            <div class="tab-pane fade" id="editSeo">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label">عنوان متا</label>
+                                        <input type="text" class="form-control" name="meta_title" id="editMetaTitle">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">توضیحات متا</label>
+                                        <textarea class="form-control" name="meta_description" id="editMetaDescription" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- English Tab -->
+                            <div class="tab-pane fade" id="editEnglish">
+                                <div class="alert alert-info small"><i class="fas fa-info-circle me-1"></i> Enter English translations. Leave empty to use Persian text.</div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Product Name (EN)</label>
+                                        <input type="text" class="form-control" name="name_en" id="editNameEn" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Short Description (EN)</label>
+                                        <input type="text" class="form-control" name="short_description_en" id="editShortDescEn" dir="ltr">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Description (EN)</label>
+                                        <textarea class="form-control" name="description_en" id="editDescriptionEn" rows="3" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Full Description (EN) <small class="text-muted">(HTML supported)</small></label>
+                                        <textarea class="form-control" name="full_description_en" id="editFullDescEn" rows="8" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Technical Specs (EN)</label>
+                                        <textarea class="form-control" name="specs_en" id="editSpecsEn" rows="3" dir="ltr"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Tags (EN)</label>
+                                        <input type="text" class="form-control" name="tags_en" id="editTagsEn" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Sections (EN)</label>
+                                        <input type="text" class="form-control" name="sections_en" id="editSectionsEn" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Meta Title (EN)</label>
+                                        <input type="text" class="form-control" name="meta_title_en" id="editMetaTitleEn" dir="ltr">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Meta Description (EN)</label>
+                                        <input type="text" class="form-control" name="meta_description_en" id="editMetaDescEn" dir="ltr">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+                        <button type="submit" class="btn btn-accent">بروزرسانی محصول</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function fillEditForm(product) {
+            document.getElementById('editProductForm').action = '/admin/products/' + product.id + '/edit';
+            document.getElementById('editName').value = product.name || '';
+            document.getElementById('editSlug').value = product.slug || '';
+            document.getElementById('editCategory').value = product.category_id || '';
+            document.getElementById('editProductCode').value = product.product_code || '';
+            document.getElementById('editSpecialStatus').value = product.special_status || '';
+            document.getElementById('editShortDesc').value = product.short_description || '';
+            document.getElementById('editDescription').value = product.description || '';
+            document.getElementById('editFullDesc').value = product.full_description || '';
+            document.getElementById('editSpecs').value = product.specs || '';
+            document.getElementById('editTags').value = product.tags || '';
+            document.getElementById('editSections').value = product.sections || '';
+            document.getElementById('editMetaTitle').value = product.meta_title || '';
+            document.getElementById('editMetaDescription').value = product.meta_description || '';
+            document.getElementById('editFeatured').checked = product.is_featured ? true : false;
+            document.getElementById('editActive').checked = product.is_active ? true : false;
+            document.getElementById('editNameEn').value = product.name_en || '';
+            document.getElementById('editShortDescEn').value = product.short_description_en || '';
+            document.getElementById('editDescriptionEn').value = product.description_en || '';
+            document.getElementById('editFullDescEn').value = product.full_description_en || '';
+            document.getElementById('editSpecsEn').value = product.specs_en || '';
+            document.getElementById('editTagsEn').value = product.tags_en || '';
+            document.getElementById('editSectionsEn').value = product.sections_en || '';
+            document.getElementById('editMetaTitleEn').value = product.meta_title_en || '';
+            document.getElementById('editMetaDescEn').value = product.meta_description_en || '';
+
+            // Current main image
+            var imgEl = document.getElementById('editCurrentImage');
+            if (product.image) {
+                imgEl.innerHTML = '<img src="' + product.image + '" style="width:80px;height:80px;object-fit:cover;border-radius:8px;" onerror="this.style.display=\'none\'">';
+            } else {
+                imgEl.innerHTML = '<span class="text-muted">بدون تصویر</span>';
+            }
+
+            // Current gallery
+            var galEl = document.getElementById('editCurrentGallery');
+            galEl.innerHTML = '';
+            if (product.gallery) {
+                try {
+                    var imgs = JSON.parse(product.gallery);
+                    imgs.forEach(function(img) {
+                        galEl.innerHTML += '<img src="' + img + '" style="width:60px;height:60px;object-fit:cover;border-radius:6px;" onerror="this.style.display=\'none\'">';
+                    });
+                } catch(e) {}
+            }
+            if (!galEl.innerHTML) {
+                galEl.innerHTML = '<span class="text-muted small">بدون تصویر</span>';
+            }
+        }
+    </script>
+</body>
+</html>

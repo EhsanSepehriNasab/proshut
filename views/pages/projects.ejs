@@ -1,0 +1,70 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <span class="current"><%= t('projects') %></span>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="section-padding">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge"><%= t('our_projects') %></span>
+            <h2 class="section-title"><%= t('executed_projects') %></h2>
+            <p class="text-muted mt-2"><%= t('projects_page_desc') %></p>
+            <div class="section-divider"></div>
+        </div>
+
+        <% if (projects && projects.length > 0) { %>
+            <div class="row g-4">
+                <% projects.forEach((proj, i) => { %>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<%= (i % 3) * 100 %>">
+                    <div class="project-page-card">
+                        <div class="project-page-img">
+                            <img src="<%= proj.image %>" alt="<%= proj.title %>" loading="lazy" onerror="this.src='/images/no-image.svg'">
+                            <div class="project-page-overlay"></div>
+                            <div class="project-page-actions">
+                                <button class="project-action-btn" data-img="<%= proj.image %>" data-title="<%- proj.title.replace(/'/g, '&#39;') %>" onclick="openImage(this.dataset.img, this.dataset.title)" title="<%= t('zoom') %>"><i class="fas fa-expand"></i></button>
+                                <button class="project-action-btn" onclick="shareProject(this)" data-title="<%= proj.title %>" data-url="/projects" title="<%= t('share') %>"><i class="fas fa-share-alt"></i></button>
+                            </div>
+                        </div>
+                        <div class="project-page-info">
+                            <h5><%= proj.title %></h5>
+                            <% if (proj.client) { %>
+                            <span class="project-page-client"><i class="fas fa-building me-1"></i><%= proj.client %></span>
+                            <% } %>
+                            <% if (proj.description) { %>
+                            <p><%= proj.description.substring(0, 100) %><% if (proj.description.length > 100) { %>...<% } %></p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="text-center py-5">
+                <i class="fas fa-project-diagram fa-3x text-muted mb-3"></i>
+                <p class="text-muted"><%= isEn ? 'No projects have been registered yet.' : 'در حال حاضر پروژه‌ای ثبت نشده است.' %></p>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section-padding" style="background:var(--bg-light)">
+    <div class="container">
+        <div class="cta-section text-center" data-aos="fade-up">
+            <h3><%= t('have_project') %></h3>
+            <p class="mb-3"><%= t('consult_experts') %></p>
+            <a href="/contact" class="btn btn-lg"><i class="fas fa-phone-alt me-2"></i> <%= t('contact_us') %></a>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

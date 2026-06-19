@@ -1,0 +1,349 @@
+<%- include('../partials/header') %>
+
+<!-- Hero Slider -->
+<section class="hero-slider">
+    <div class="swiper heroSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="hero-slide" style="background-image: url('/images/trash.png')">
+                    <div class="hero-overlay"></div>
+                    <div class="container"><div class="hero-content" data-aos="fade-up">
+                        <span class="hero-badge"><%= settings.company_name %></span>
+                        <h1><%= t('urban_waste_bins') %></h1>
+                        <p><%= t('urban_waste_desc') %></p>
+                        <div class="hero-buttons">
+                            <a href="/products?category=trash-cans" class="btn btn-primary btn-lg"><%= t('view_products') %> <i class="fas fa-arrow-left ms-2"></i></a>
+                            <a href="/contact" class="btn btn-outline-light btn-lg"><%= t('contact_us') %></a>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="hero-slide" style="background-image: url('/images/kidsplay.jpg')">
+                    <div class="hero-overlay"></div>
+                    <div class="container"><div class="hero-content" data-aos="fade-up">
+                        <span class="hero-badge"><%= settings.company_name %></span>
+                        <h1><%= t('kids_play') %></h1>
+                        <p><%= t('kids_play_desc') %></p>
+                        <div class="hero-buttons">
+                            <a href="/products?category=playground-equipment" class="btn btn-primary btn-lg"><%= t('view_products') %> <i class="fas fa-arrow-left ms-2"></i></a>
+                            <a href="/contact" class="btn btn-outline-light btn-lg"><%= t('contact_us') %></a>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="hero-slide" style="background-image: url('/images/chair.jpg')">
+                    <div class="hero-overlay"></div>
+                    <div class="container"><div class="hero-content" data-aos="fade-up">
+                        <span class="hero-badge"><%= settings.company_name %></span>
+                        <h1><%= t('urban_furniture') %></h1>
+                        <p><%= t('urban_furniture_desc') %></p>
+                        <div class="hero-buttons">
+                            <a href="/products?category=urban-furniture" class="btn btn-primary btn-lg"><%= t('view_products') %> <i class="fas fa-arrow-left ms-2"></i></a>
+                            <a href="/contact" class="btn btn-outline-light btn-lg"><%= t('contact_us') %></a>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <%/* Countries Network — hidden for now
+    <div class="hero-countries d-none d-lg-block">
+        <div class="countries-hub">
+            <div class="hub-center">
+                <img src="/images/logo.jpg" alt="پروشات آریا">
+            </div>
+            <svg class="hub-lines" viewBox="0 0 400 400">
+                <defs>
+                    <marker id="arrowhead" markerWidth="14" markerHeight="10" refX="13" refY="5" orient="auto">
+                        <path d="M0,0 L14,5 L0,10 L3,5 Z" fill="#fff"/>
+                    </marker>
+                </defs>
+                <line x1="200" y1="160" x2="200" y2="85" class="hub-line" marker-end="url(#arrowhead)"/>
+                <line x1="235" y1="180" x2="310" y2="145" class="hub-line" marker-end="url(#arrowhead)"/>
+                <line x1="235" y1="220" x2="310" y2="255" class="hub-line" marker-end="url(#arrowhead)"/>
+                <line x1="200" y1="240" x2="200" y2="315" class="hub-line" marker-end="url(#arrowhead)"/>
+                <line x1="165" y1="220" x2="90" y2="255" class="hub-line" marker-end="url(#arrowhead)"/>
+                <line x1="165" y1="180" x2="90" y2="145" class="hub-line" marker-end="url(#arrowhead)"/>
+            </svg>
+            <div class="hub-flag" style="left:200px;top:85px;transform:translate(-50%,-100%);" title="ایران">
+                <img src="https://flagcdn.com/w80/ir.png" alt="ایران"><span>ایران</span>
+            </div>
+            <div class="hub-flag" style="left:350px;top:145px;transform:translate(-50%,-50%);" title="عراق">
+                <img src="https://flagcdn.com/w80/iq.png" alt="عراق"><span>عراق</span>
+            </div>
+            <div class="hub-flag" style="left:350px;top:255px;transform:translate(-50%,-50%);" title="آذربایجان">
+                <img src="https://flagcdn.com/w80/az.png" alt="آذربایجان"><span>آذربایجان</span>
+            </div>
+            <div class="hub-flag" style="left:200px;top:315px;transform:translate(-50%,0);" title="تاجیکستان">
+                <img src="https://flagcdn.com/w80/tj.png" alt="تاجیکستان"><span>تاجیکستان</span>
+            </div>
+            <div class="hub-flag" style="left:50px;top:255px;transform:translate(-50%,-50%);" title="ارمنستان">
+                <img src="https://flagcdn.com/w80/am.png" alt="ارمنستان"><span>ارمنستان</span>
+            </div>
+            <div class="hub-flag" style="left:50px;top:145px;transform:translate(-50%,-50%);" title="ترکمنستان">
+                <img src="https://flagcdn.com/w80/tm.png" alt="ترکمنستان"><span>ترکمنستان</span>
+            </div>
+        </div>
+    </div>
+    */%>
+    <!-- Brands Scroll -->
+    <div class="hero-brands-strip">
+        <div class="hero-brands-track">
+            <div class="hero-brand-item"><img src="/images/tabriz.png" alt="تبریز"></div>
+            <div class="hero-brand-item"><img src="/images/isfahan.png" alt="اصفهان"></div>
+            <div class="hero-brand-item"><img src="/images/tehran.png" alt="تهران"></div>
+            <div class="hero-brand-item"><img src="/images/astan.png" alt="آستان"></div>
+            <div class="hero-brand-item"><img src="/images/mashhad.png" alt="مشهد"></div>
+            <div class="hero-brand-item"><img src="/images/tabriz.png" alt="تبریز"></div>
+            <div class="hero-brand-item"><img src="/images/isfahan.png" alt="اصفهان"></div>
+            <div class="hero-brand-item"><img src="/images/tehran.png" alt="تهران"></div>
+            <div class="hero-brand-item"><img src="/images/astan.png" alt="آستان"></div>
+            <div class="hero-brand-item"><img src="/images/mashhad.png" alt="مشهد"></div>
+            <div class="hero-brand-item"><img src="/images/tabriz.png" alt="تبریز"></div>
+            <div class="hero-brand-item"><img src="/images/isfahan.png" alt="اصفهان"></div>
+            <div class="hero-brand-item"><img src="/images/tehran.png" alt="تهران"></div>
+            <div class="hero-brand-item"><img src="/images/astan.png" alt="آستان"></div>
+            <div class="hero-brand-item"><img src="/images/mashhad.png" alt="مشهد"></div>
+            <div class="hero-brand-item"><img src="/images/tabriz.png" alt="تبریز"></div>
+            <div class="hero-brand-item"><img src="/images/isfahan.png" alt="اصفهان"></div>
+            <div class="hero-brand-item"><img src="/images/tehran.png" alt="تهران"></div>
+            <div class="hero-brand-item"><img src="/images/astan.png" alt="آستان"></div>
+            <div class="hero-brand-item"><img src="/images/mashhad.png" alt="مشهد"></div>
+        </div>
+    </div>
+</section>
+
+<!-- About CTA (شرکت شهر و اندیشه پروشات آریا) -->
+<section class="about-cta-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="iran-hub-wrapper">
+                    <img src="/images/iran.png" alt="نقشه ایران" class="iran-hub-map">
+                    <div class="iran-hub-logo">
+                        <img src="/images/logo.jpg" alt="پروشات آریا">
+                    </div>
+                    <svg class="iran-hub-svg" viewBox="0 0 600 450" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <marker id="hub-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <path d="M0,0 L10,3.5 L0,7 L2,3.5 Z" fill="var(--primary)"/>
+                            </marker>
+                        </defs>
+                        <path d="M320,237 C240,237 118,278 78,253" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M320,225 C258,158 198,118 158,93" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M336,225 C336,158 350,80 350,40" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M350,237 C418,235 488,240 555,225" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M358,218 C398,158 498,108 558,83" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M336,248 C340,338 360,390 385,425" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                    </svg>
+                    <div class="iran-hub-flag" style="left:8%;top:54%;"><img src="https://flagcdn.com/w80/iq.png" alt="<%= isEn ? 'Iraq' : 'عراق' %>"><span><%= isEn ? 'Iraq' : 'عراق' %></span></div>
+                    <div class="iran-hub-flag" style="left:21%;top:14%;"><img src="https://flagcdn.com/w80/am.png" alt="<%= isEn ? 'Armenia' : 'ارمنستان' %>"><span><%= isEn ? 'Armenia' : 'ارمنستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:58%;top:4%;"><img src="https://flagcdn.com/w80/tm.png" alt="<%= isEn ? 'Turkmenistan' : 'ترکمنستان' %>"><span><%= isEn ? 'Turkmenistan' : 'ترکمنستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:95%;top:48%;"><img src="https://flagcdn.com/w80/af.png" alt="<%= isEn ? 'Afghanistan' : 'افغانستان' %>"><span><%= isEn ? 'Afghanistan' : 'افغانستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:95%;top:12%;"><img src="https://flagcdn.com/w80/tj.png" alt="<%= isEn ? 'Tajikistan' : 'تاجیکستان' %>"><span><%= isEn ? 'Tajikistan' : 'تاجیکستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:66%;top:100%;"><img src="https://flagcdn.com/w80/om.png" alt="<%= isEn ? 'Oman' : 'عمان' %>"><span><%= isEn ? 'Oman' : 'عمان' %></span></div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="about-cta-content">
+                    <span class="section-badge"><%= t('about_us') %></span>
+                    <h2 class="section-title"><%= settings.company_name %></h2>
+                    <p class="lead"><%= settings.about_short || '' %></p>
+                    <div class="about-features">
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('premium_materials') %></div>
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('safety_standards') %></div>
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('custom_design') %></div>
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('warranty_support') %></div>
+                    </div>
+                    <a href="/about" class="btn btn-primary btn-lg mt-3"><%= t('read_more') %> <i class="fas fa-arrow-left ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="products-showcase section-padding">
+    <div class="container">
+        <!-- Layout: Description Right + Products Left -->
+        <div class="showcase-layout" data-aos="fade-up">
+            <!-- Right side: Category description -->
+            <div class="showcase-description">
+                <div class="showcase-desc-inner" id="showcaseDesc">
+                    <div class="showcase-desc-icon"><i class="fas fa-boxes"></i></div>
+                    <h3><%= t('proshut_products') %></h3>
+                    <p><%= settings.about_short || '' %></p>
+                    <div class="showcase-desc-stats">
+                        <div class="showcase-stat">
+                            <strong><%= settings.years_experience || (isEn ? '15+' : '۱۵+') %></strong>
+                            <span><%= t('years_exp') %></span>
+                        </div>
+                        <div class="showcase-stat">
+                            <strong><%= settings.projects_done || (isEn ? '500+' : '۵۰۰+') %></strong>
+                            <span><%= t('successful_projects') %></span>
+                        </div>
+                    </div>
+                    <a href="/products" class="btn btn-primary btn-sm mt-2"><%= t('view_all_products') %> <i class="fas fa-arrow-left ms-2"></i></a>
+                </div>
+            </div>
+
+            <!-- Scroll right button (between cards) -->
+            <button class="showcase-scroll-btn showcase-scroll-right" id="showcaseScrollRight" aria-label="<%= t('scroll_right') %>"><i class="fas fa-chevron-right"></i></button>
+
+            <!-- Left side: Scrollable products -->
+            <div class="showcase-products-wrap">
+                <button class="showcase-scroll-btn showcase-scroll-left" id="showcaseScrollLeft" aria-label="<%= t('scroll_left') %>"><i class="fas fa-chevron-left"></i></button>
+                <div class="showcase-products" id="showcaseProducts">
+                    <% featuredProducts.forEach((product, i) => { %>
+                    <article class="showcase-product-card">
+                        <div class="product-image">
+                            <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy" onerror="this.src='/images/no-image.svg'">
+                            <div class="product-overlay">
+                                <a href="/product/<%= product.slug %>" class="btn btn-light btn-sm"><%= t('view_details') %></a>
+                            </div>
+                            <% if (product.is_featured) { %><span class="product-badge"><%= t('featured') %></span><% } %>
+                            <% if (product.special_status && product.special_status.trim()) { %>
+                            <span class="product-badge" style="top: auto; bottom: 10px; background: #17a2b8;"><%= product.special_status %></span>
+                            <% } %>
+                        </div>
+                        <div class="product-info">
+                            <span class="product-category"><%= product.category_name %></span>
+                            <h5><a href="/product/<%= product.slug %>"><%= product.name %></a></h5>
+                            <% if (product.short_description) { %>
+                            <p class="product-short-desc"><%= product.short_description %></p>
+                            <% } %>
+                            <% if (product.product_code) { %>
+                            <small class="product-code"><%= t('code') %>: <span dir="ltr"><%= product.product_code %></span></small>
+                            <% } %>
+                        </div>
+                    </article>
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Banner -->
+<section class="categories-section">
+    <div class="container position-relative" style="z-index:2">
+        <div class="section-header text-center text-white mb-5" data-aos="fade-up">
+            <span class="section-badge section-badge-light"><%= t('categories_title') %></span>
+            <h2 class="section-title text-white"><%= t('our_specialties') %></h2>
+        </div>
+        <div class="row g-4">
+            <% categories.slice(0, 4).forEach((cat, i) => { %>
+            <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="<%= i * 100 %>">
+                <a href="/products?category=<%= cat.slug %>" class="category-card">
+                    <div class="category-icon"><i class="<%= cat.icon %>"></i></div>
+                    <h5><%= cat.name %></h5>
+                    <p><%= cat.description %></p>
+                    <span class="category-arrow"><i class="fas fa-arrow-left"></i></span>
+                </a>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<% if (projects.length > 0) { %>
+<section class="projects-home-section">
+    <div class="container">
+        <div class="projects-layout">
+            <!-- Right side: Text -->
+            <div class="projects-desc" data-aos="fade-left">
+                <span class="section-badge"><%= t('our_projects') %></span>
+                <h2 class="section-title"><%= t('successful_projects_title') %></h2>
+                <div class="section-divider" style="margin:0 0 20px"></div>
+                <p class="projects-desc-text"><%= t('projects_desc') %></p>
+                <div class="projects-desc-stats">
+                    <div class="projects-stat-item">
+                        <strong><%= settings.projects_done || (isEn ? '500+' : '۵۰۰+') %></strong>
+                        <span><%= t('successful_projects') %></span>
+                    </div>
+                    <div class="projects-stat-item">
+                        <strong><%= settings.happy_clients || (isEn ? '300+' : '۳۰۰+') %></strong>
+                        <span><%= t('happy_clients') %></span>
+                    </div>
+                </div>
+                <a href="/projects" class="btn btn-primary btn-sm mt-4"><%= t('view_all_projects') %> <i class="fas fa-arrow-left ms-2"></i></a>
+            </div>
+            <!-- Left side: 2x2 grid -->
+            <div class="projects-grid" data-aos="fade-right">
+                <% projects.slice(0, 4).forEach((proj, i) => { %>
+                <div class="project-window-card">
+                    <img src="<%= proj.image %>" alt="<%= proj.title %>" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1564429238961-244d2be59e1e?w=600&q=80'">
+                    <div class="project-overlay"></div>
+                    <button class="project-share-btn" onclick="shareProject(this)" data-title="<%= proj.title %>" data-url="<%= '/projects#' + proj.slug %>" aria-label="<%= t('share') %>"><i class="fas fa-share-alt"></i></button>
+                    <div class="project-window-info">
+                        <h5><%= proj.title %></h5>
+                        <p><%= proj.client %></p>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<!-- Contact Info -->
+<section class="contact-home-section">
+    <div class="contact-home-inner">
+        <div class="contact-skyline">
+            <img src="/images/apartments.png" class="skyline-img skyline-flip" style="right:calc(50% + 343px);height:80px;">
+            <img src="/images/apartments.png" class="skyline-img skyline-flip" style="right:calc(50% + 400px);height:40px;">
+            <img src="/images/city.png" class="skyline-img skyline-city" style="left:50%;transform:translateX(-50%);height:170px;">
+            <img src="/images/apartments.png" class="skyline-img" style="left:calc(50% + 343px);height:80px;">
+            <img src="/images/apartments.png" class="skyline-img" style="left:calc(50% + 400px);height:40px;">
+        </div>
+        <div class="container">
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                    <div class="contact-home-card contact-card-address">
+                        <div class="contact-home-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <h5><%= t('office_address') %></h5>
+                        <p><%= settings.address %></p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="contact-home-card contact-card-phone">
+                        <div class="contact-home-icon"><i class="fas fa-phone-alt"></i></div>
+                        <h5><%= t('phone_number') %></h5>
+                        <p dir="ltr"><%= settings.phone %></p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="contact-home-card contact-card-clock">
+                        <div class="contact-home-icon"><i class="fas fa-clock"></i></div>
+                        <h5><%= t('working_hours') %></h5>
+                        <p><%= settings.working_hours %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function shareProject(btn) {
+    var title = btn.getAttribute('data-title');
+    var url = location.origin + btn.getAttribute('data-url');
+    if (navigator.share) {
+        navigator.share({ title: title, text: title, url: url }).catch(function(){});
+    } else {
+        navigator.clipboard.writeText(url).then(function() {
+            var orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.background = 'var(--primary)';
+            btn.style.color = 'var(--dark)';
+            setTimeout(function() { btn.innerHTML = orig; btn.style.background = ''; btn.style.color = ''; }, 1500);
+        });
+    }
+}
+</script>
+<%- include('../partials/footer') %>

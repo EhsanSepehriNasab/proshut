@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت خبرنامه</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">مدیریت خبرنامه</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- Subscriber Count -->
+            <div class="stat-box">
+                <i class="fas fa-users"></i>
+                <div>
+                    <h2><%= subscribers ? subscribers.length : 0 %></h2>
+                    <p>مشترک خبرنامه</p>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>لیست مشترکین</span>
+                    <a href="/admin/newsletter/export" class="btn" class="btn-accent">
+                        <i class="fas fa-download me-1"></i> خروجی اکسل
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>ایمیل</th>
+                                    <th>تاریخ عضویت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (subscribers && subscribers.length > 0) { %>
+                                    <% subscribers.forEach(function(sub, index) { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td dir="ltr" class="text-end"><%= sub.email %></td>
+                                            <td><%= new Date(sub.created_at).toLocaleDateString('fa-IR') %></td>
+                                            <td>
+                                                <form action="/admin/newsletter/<%= sub.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('آیا از حذف این مشترک مطمئن هستید؟')">
+                                                    <button type="submit" class="btn-action text-white" style="background: #e74c3c;">
+                                                        <i class="fas fa-trash"></i> حذف
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr><td colspan="4" class="text-center text-muted py-4">مشترکی وجود ندارد</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

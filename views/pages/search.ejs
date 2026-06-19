@@ -1,0 +1,101 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <span class="current"><%= isEn ? 'Search Results' : 'نتایج جستجو' %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="section-padding">
+    <div class="container">
+        <!-- Search Bar -->
+        <div class="row justify-content-center mb-5" data-aos="fade-up">
+            <div class="col-lg-8">
+                <form action="/search" method="GET" class="contact-form">
+                    <div class="input-group" style="border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);">
+                        <input type="search" name="q" class="form-control form-control-lg" placeholder="<%= isEn ? 'Search products...' : 'جستجوی محصولات...' %>" value="<%= typeof query !== 'undefined' ? query : '' %>" style="border: none; padding: 15px 20px;">
+                        <button type="submit" class="btn btn-primary" style="padding: 15px 30px;"><i class="fas fa-search me-2"></i><%= isEn ? 'Search' : 'جستجو' %></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <% if (typeof query !== 'undefined' && query) { %>
+        <!-- Results Header -->
+        <div class="mb-4" data-aos="fade-up">
+            <h4 style="font-weight: 700;">
+                <%= isEn ? 'Search results for:' : 'نتایج جستجو برای:' %> <span style="color: var(--primary-color);">"<%= query %>"</span>
+            </h4>
+            <p class="text-muted"><%= products.length %> <%= isEn ? 'results found' : 'نتیجه یافت شد' %></p>
+            <hr>
+        </div>
+
+        <% if (products.length === 0) { %>
+        <div class="text-center py-5" data-aos="fade-up">
+            <i class="fas fa-search" style="font-size: 4rem; color: var(--border-color); margin-bottom: 20px;"></i>
+            <h4 style="color: var(--text-light);"><%= isEn ? 'No results found' : 'نتیجه‌ای یافت نشد' %></h4>
+            <p class="text-muted"><%= isEn ? 'Sorry, no products matched your search. Please try a different term.' : 'متأسفانه محصولی مطابق با جستجوی شما پیدا نشد. لطفاً عبارت دیگری را جستجو کنید.' %></p>
+            <div class="mt-4">
+                <h6 style="font-weight: 700;"><%= isEn ? 'Suggestions:' : 'پیشنهادات:' %></h6>
+                <ul class="list-unstyled text-muted">
+                    <li><i class="fas fa-check me-2" style="color: var(--primary-color);"></i><%= isEn ? 'Try different keywords' : 'از کلمات کلیدی دیگری استفاده کنید' %></li>
+                    <li><i class="fas fa-check me-2" style="color: var(--primary-color);"></i><%= isEn ? 'Check your spelling' : 'املای کلمات را بررسی کنید' %></li>
+                    <li><i class="fas fa-check me-2" style="color: var(--primary-color);"></i><%= isEn ? 'Use shorter phrases' : 'از عبارات کوتاه‌تر استفاده کنید' %></li>
+                </ul>
+            </div>
+            <a href="/products" class="btn btn-primary mt-3"><i class="fas fa-box me-2"></i><%= isEn ? 'View All Products' : 'مشاهده همه محصولات' %></a>
+        </div>
+        <% } else { %>
+        <!-- Search Results -->
+        <div class="row g-4">
+            <% products.forEach((product, i) => { %>
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="<%= (i % 4) * 100 %>">
+                <article class="product-card">
+                    <div class="product-image">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy" onerror="this.src='/images/no-image.svg'">
+                        <div class="product-overlay">
+                            <a href="/product/<%= product.slug %>" class="btn btn-light btn-sm"><%= isEn ? 'View Details' : 'مشاهده جزئیات' %></a>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category"><%= product.category_name %></span>
+                        <h5><a href="/product/<%= product.slug %>"><%= product.name %></a></h5>
+                    </div>
+                </article>
+            </div>
+            <% }); %>
+        </div>
+        <% } %>
+
+        <% } else { %>
+        <!-- No Query -->
+        <div class="text-center py-5" data-aos="fade-up">
+            <i class="fas fa-search" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 20px; opacity: 0.5;"></i>
+            <h4><%= isEn ? 'Search for what you need' : 'عبارت مورد نظر خود را جستجو کنید' %></h4>
+            <p class="text-muted"><%= isEn ? 'Enter a product name or keyword in the search box above.' : 'در کادر بالا نام محصول یا کلمه کلیدی مورد نظر خود را وارد کنید.' %></p>
+        </div>
+        <% } %>
+
+        <!-- Popular Categories -->
+        <div class="mt-5 pt-4" style="border-top: 1px solid var(--border-color);" data-aos="fade-up">
+            <h5 style="font-weight: 700; margin-bottom: 20px;"><i class="fas fa-th-large me-2" style="color: var(--primary-color);"></i><%= isEn ? 'Popular Categories' : 'دسته‌بندی‌های محبوب' %></h5>
+            <div class="d-flex flex-wrap gap-2">
+                <% categories.forEach(cat => { %>
+                <a href="/products?category=<%= cat.slug %>" style="display: inline-block; background: var(--bg-light); padding: 8px 18px; border-radius: 25px; color: var(--text-color); font-size: 0.9rem; transition: var(--transition); border: 1px solid var(--border-color);"
+                   onmouseover="this.style.background='var(--primary-color)'; this.style.color='#fff'; this.style.borderColor='var(--primary-color)';"
+                   onmouseout="this.style.background='var(--bg-light)'; this.style.color='var(--text-color)'; this.style.borderColor='var(--border-color)';">
+                    <i class="<%= cat.icon %> me-1"></i><%= cat.name %>
+                </a>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

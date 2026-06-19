@@ -1,0 +1,174 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <span class="current"><%= isEn ? 'Support' : 'پشتیبانی' %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- Support Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Support Form -->
+            <div class="col-lg-8" data-aos="fade-up">
+                <div class="contact-form-wrapper">
+                    <h3><i class="fas fa-headset me-2" style="color: var(--primary-color);"></i><%= isEn ? 'Submit Support Request' : 'ثبت درخواست پشتیبانی' %></h3>
+                    <p class="text-muted mb-4"><%= isEn ? 'Submit your request and our support team will respond as soon as possible.' : 'درخواست خود را ثبت کنید، تیم پشتیبانی ما در اسرع وقت پاسخگوی شما خواهد بود.' %></p>
+
+                    <% if (typeof success !== 'undefined' && success) { %>
+                    <div class="alert alert-success" role="alert">
+                        <i class="fas fa-check-circle me-2"></i><%= success %>
+                        <% if (typeof ticket !== 'undefined' && ticket && ticket.ticket_number) { %>
+                        <div class="mt-2">
+                            <strong><%= isEn ? 'Your ticket number:' : 'شماره تیکت شما:' %> <span dir="ltr"><%= ticket.ticket_number %></span></strong>
+                            <br>
+                            <small><%= isEn ? 'Please note this number for follow-up.' : 'لطفاً این شماره را برای پیگیری یادداشت کنید.' %></small>
+                        </div>
+                        <% } %>
+                    </div>
+                    <% } %>
+
+                    <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i><%= error %>
+                    </div>
+                    <% } %>
+
+                    <form action="/support" method="POST" class="contact-form">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label"><%= isEn ? 'Full Name' : 'نام و نام خانوادگی' %> <span class="text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" placeholder="<%= isEn ? 'Enter your name' : 'نام خود را وارد کنید' %>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><%= isEn ? 'Phone Number' : 'شماره تماس' %> <span class="text-danger">*</span></label>
+                                <input type="tel" name="phone" class="form-control" placeholder="<%= isEn ? '09XXXXXXXXX' : '۰۹۱۲XXXXXXX' %>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><%= isEn ? 'Email' : 'ایمیل' %></label>
+                                <input type="email" name="email" class="form-control" placeholder="email@example.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><%= isEn ? 'Priority' : 'اولویت' %></label>
+                                <select name="priority" class="form-select">
+                                    <option value="normal"><%= isEn ? 'Normal' : 'عادی' %></option>
+                                    <option value="high"><%= isEn ? 'Urgent' : 'فوری' %></option>
+                                    <option value="low"><%= isEn ? 'Low' : 'کم اهمیت' %></option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"><%= isEn ? 'Subject' : 'موضوع' %> <span class="text-danger">*</span></label>
+                                <input type="text" name="subject" class="form-control" placeholder="<%= isEn ? 'Enter the subject of your request' : 'موضوع درخواست خود را بنویسید' %>" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"><%= isEn ? 'Description / Request' : 'شرح مشکل / درخواست' %> <span class="text-danger">*</span></label>
+                                <textarea name="message" class="form-control" rows="6" placeholder="<%= isEn ? 'Please describe your issue or request in detail...' : 'لطفاً مشکل یا درخواست خود را با جزئیات شرح دهید...' %>" required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane me-2"></i><%= isEn ? 'Submit Request' : 'ارسال درخواست' %></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- Track Ticket -->
+                <div class="sidebar-widget mb-4">
+                    <h4><i class="fas fa-search me-2"></i><%= isEn ? 'Track Ticket' : 'پیگیری تیکت' %></h4>
+                    <p class="text-muted" style="font-size: 0.9rem;"><%= isEn ? 'Enter your ticket number to check its status.' : 'شماره تیکت خود را وارد کنید تا وضعیت آن را مشاهده کنید.' %></p>
+                    <form action="/support/track" method="GET">
+                        <div class="mb-3">
+                            <input type="text" name="ticket" class="form-control" placeholder="<%= isEn ? 'Ticket number (e.g. TK-1001)' : 'شماره تیکت (مثلاً TK-1001)' %>" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search me-2"></i><%= isEn ? 'Track' : 'پیگیری' %></button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="sidebar-widget mb-4">
+                    <h4><i class="fas fa-phone-alt me-2"></i><%= isEn ? 'Direct Contact' : 'تماس مستقیم' %></h4>
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div style="min-width: 45px; height: 45px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-phone-alt" style="color: #fff;"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted"><%= isEn ? 'Support Phone' : 'تلفن پشتیبانی' %></small>
+                            <div dir="ltr" style="font-weight: 600;"><%= settings.phone %></div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div style="min-width: 45px; height: 45px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fab fa-whatsapp" style="color: #fff;"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted"><%= isEn ? 'Support WhatsApp' : 'واتساپ پشتیبانی' %></small>
+                            <div><a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" style="color: var(--primary-color); font-weight: 600;"><%= isEn ? 'Send Message' : 'ارسال پیام' %></a></div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="min-width: 45px; height: 45px; background: var(--secondary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-envelope" style="color: #fff;"></i>
+                        </div>
+                        <div>
+                            <small class="text-muted"><%= isEn ? 'Support Email' : 'ایمیل پشتیبانی' %></small>
+                            <div style="font-weight: 600;"><%= settings.email %></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="sidebar-widget">
+                    <h4><i class="fas fa-question-circle me-2"></i><%= isEn ? 'FAQ' : 'سوالات متداول' %></h4>
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item" style="border: none; border-bottom: 1px solid var(--border-color);">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" style="font-size: 0.9rem; padding: 12px 0;">
+                                    <%= isEn ? 'What is the response time?' : 'زمان پاسخگویی چقدر است؟' %>
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 0 0 12px; font-size: 0.85rem; color: var(--text-light);">
+                                    <%= isEn ? 'Our support team responds to requests within 2 hours during business hours.' : 'تیم پشتیبانی ما در ساعات کاری حداکثر ظرف ۲ ساعت به درخواست‌ها پاسخ می‌دهد.' %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none; border-bottom: 1px solid var(--border-color);">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" style="font-size: 0.9rem; padding: 12px 0;">
+                                    <%= isEn ? 'Do you offer warranty services?' : 'آیا خدمات گارانتی دارید؟' %>
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 0 0 12px; font-size: 0.85rem; color: var(--text-light);">
+                                    <%= isEn ? 'Yes, all our products and services come with a valid warranty.' : 'بله، تمامی محصولات و خدمات ما دارای گارانتی معتبر هستند.' %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item" style="border: none;">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" style="font-size: 0.9rem; padding: 12px 0;">
+                                    <%= isEn ? 'Do you provide on-site services?' : 'خدمات در محل ارائه می‌شود؟' %>
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body" style="padding: 0 0 12px; font-size: 0.85rem; color: var(--text-light);">
+                                    <%= isEn ? 'Yes, our technical team can provide on-site services at the project location.' : 'بله، تیم فنی ما امکان ارائه خدمات در محل پروژه را دارد.' %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

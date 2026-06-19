@@ -1,0 +1,194 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <span class="current"><%= t('about') %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- About Intro — inspired by homepage About CTA -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="iran-hub-wrapper">
+                    <img src="/images/aboutus.png" alt="<%= isEn ? 'About Proshut Aria' : 'درباره پروشات آریا' %>" class="iran-hub-map">
+                    <div class="iran-hub-logo">
+                        <img src="/images/logo.jpg" alt="<%= isEn ? 'Proshut Aria' : 'پروشات آریا' %>">
+                    </div>
+                    <svg class="iran-hub-svg" viewBox="0 0 600 450" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <marker id="hub-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <path d="M0,0 L10,3.5 L0,7 L2,3.5 Z" fill="var(--primary)"/>
+                            </marker>
+                        </defs>
+                        <path d="M320,237 C240,237 118,278 78,253" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M320,225 C258,158 198,118 158,93" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M336,225 C336,158 350,80 350,40" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M350,237 C418,235 488,240 555,225" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M358,218 C398,158 498,108 558,83" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                        <path d="M336,248 C340,338 360,390 385,425" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#hub-arrow)"/>
+                    </svg>
+                    <div class="iran-hub-flag" style="left:8%;top:54%;"><img src="https://flagcdn.com/w80/iq.png" alt="<%= isEn ? 'Iraq' : 'عراق' %>"><span><%= isEn ? 'Iraq' : 'عراق' %></span></div>
+                    <div class="iran-hub-flag" style="left:21%;top:14%;"><img src="https://flagcdn.com/w80/am.png" alt="<%= isEn ? 'Armenia' : 'ارمنستان' %>"><span><%= isEn ? 'Armenia' : 'ارمنستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:58%;top:4%;"><img src="https://flagcdn.com/w80/tm.png" alt="<%= isEn ? 'Turkmenistan' : 'ترکمنستان' %>"><span><%= isEn ? 'Turkmenistan' : 'ترکمنستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:95%;top:48%;"><img src="https://flagcdn.com/w80/af.png" alt="<%= isEn ? 'Afghanistan' : 'افغانستان' %>"><span><%= isEn ? 'Afghanistan' : 'افغانستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:95%;top:12%;"><img src="https://flagcdn.com/w80/tj.png" alt="<%= isEn ? 'Tajikistan' : 'تاجیکستان' %>"><span><%= isEn ? 'Tajikistan' : 'تاجیکستان' %></span></div>
+                    <div class="iran-hub-flag" style="left:66%;top:100%;"><img src="https://flagcdn.com/w80/om.png" alt="<%= isEn ? 'Oman' : 'عمان' %>"><span><%= isEn ? 'Oman' : 'عمان' %></span></div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="about-cta-content">
+                    <span class="section-badge"><%= t('about_us') %></span>
+                    <h2 class="section-title"><%= settings.company_name %></h2>
+                    <div class="section-divider"></div>
+                    <p class="lead mt-3"><%= settings.about_short || '' %></p>
+                    <div class="text-muted" style="line-height: 2; white-space: pre-line;"><%= settings.about_text || '' %></div>
+                    <div class="about-features mt-3">
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('premium_materials') %></div>
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('safety_standards') %></div>
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('custom_design') %></div>
+                        <div class="about-feature"><i class="fas fa-check-circle"></i> <%= t('warranty_support') %></div>
+                    </div>
+                    <a href="/contact" class="btn btn-primary btn-lg mt-4"><%= t('contact_us') %> <i class="fas fa-arrow-<%= isEn ? 'right' : 'left' %> ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission / Vision -->
+<section class="section-padding bg-light" style="padding-top:60px">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="section-badge"><%= t('our_values') %></span>
+            <h2 class="section-title"><%= t('mission_vision') %></h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up">
+                <div class="value-card text-center">
+                    <i class="fas fa-bullseye"></i>
+                    <h5><%= t('our_mission') %></h5>
+                    <p><%= t('mission_desc') %></p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="value-card text-center">
+                    <i class="fas fa-eye"></i>
+                    <h5><%= t('our_vision') %></h5>
+                    <p><%= settings.about_vision || (isEn ? 'Becoming the leading brand of urban furniture and playgrounds in the Middle East.' : 'تبدیل شدن به برند اول مبلمان شهری و زمین‌های بازی کودکان در خاورمیانه.') %></p>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="value-card text-center">
+                    <i class="fas fa-gem"></i>
+                    <h5><%= t('our_values_title') %></h5>
+                    <p><%= t('values_desc') %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline -->
+<section class="section-padding" style="padding-top:60px">
+    <div class="container">
+        <div class="section-header text-center" data-aos="fade-up">
+            <span class="section-badge"><%= t('history') %></span>
+            <h2 class="section-title"><%= t('growth_path') %></h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="mt-5" style="position: relative; padding-right: 40px;">
+            <div style="position: absolute; right: 15px; top: 0; bottom: 0; width: 3px; background: var(--primary);"></div>
+            <div class="mb-5" data-aos="fade-up" style="position: relative;">
+                <div style="position: absolute; right: -33px; top: 5px; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 3px solid #fff; box-shadow: var(--shadow);"></div>
+                <div style="background: var(--bg-light); padding: 25px; border-radius: var(--radius); border: 1px solid var(--border);">
+                    <span style="color: var(--primary-dark); font-weight: 700;"><%= isEn ? '2011' : '۱۳۹۰' %></span>
+                    <h5 style="font-weight: 700; margin: 8px 0;"><%= isEn ? 'Company Founded' : 'تأسیس شرکت' %></h5>
+                    <p class="text-muted mb-0"><%= isEn ? 'Proshut Aria was founded with the goal of manufacturing urban furniture and children\'s playgrounds.' : 'شرکت پروشات آریا با هدف تولید مبلمان شهری و زمین‌های بازی کودکان تأسیس شد.' %></p>
+                </div>
+            </div>
+            <div class="mb-5" data-aos="fade-up" data-aos-delay="100" style="position: relative;">
+                <div style="position: absolute; right: -33px; top: 5px; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 3px solid #fff; box-shadow: var(--shadow);"></div>
+                <div style="background: var(--bg-light); padding: 25px; border-radius: var(--radius); border: 1px solid var(--border);">
+                    <span style="color: var(--primary-dark); font-weight: 700;"><%= isEn ? '2015' : '۱۳۹۴' %></span>
+                    <h5 style="font-weight: 700; margin: 8px 0;"><%= isEn ? 'Production Line Expansion' : 'گسترش خط تولید' %></h5>
+                    <p class="text-muted mb-0"><%= isEn ? 'Added production lines for safety flooring, artificial grass, and outdoor fitness equipment.' : 'افزودن خطوط تولید کفپوش ایمنی، چمن مصنوعی و دستگاه‌های بدنسازی پارکی.' %></p>
+                </div>
+            </div>
+            <div class="mb-5" data-aos="fade-up" data-aos-delay="200" style="position: relative;">
+                <div style="position: absolute; right: -33px; top: 5px; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 3px solid #fff; box-shadow: var(--shadow);"></div>
+                <div style="background: var(--bg-light); padding: 25px; border-radius: var(--radius); border: 1px solid var(--border);">
+                    <span style="color: var(--primary-dark); font-weight: 700;"><%= isEn ? '2019' : '۱۳۹۸' %></span>
+                    <h5 style="font-weight: 700; margin: 8px 0;"><%= isEn ? 'Export to Neighboring Countries' : 'صادرات به کشورهای همسایه' %></h5>
+                    <p class="text-muted mb-0"><%= isEn ? 'Started exporting products to Iraq, Afghanistan, Turkmenistan, and other regional countries.' : 'آغاز صادرات محصولات به عراق، افغانستان، ترکمنستان و سایر کشورهای منطقه.' %></p>
+                </div>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300" style="position: relative;">
+                <div style="position: absolute; right: -33px; top: 5px; width: 20px; height: 20px; background: var(--primary); border-radius: 50%; border: 3px solid #fff; box-shadow: var(--shadow);"></div>
+                <div style="background: var(--bg-light); padding: 25px; border-radius: var(--radius); border: 1px solid var(--border);">
+                    <span style="color: var(--primary-dark); font-weight: 700;"><%= isEn ? '2025' : '۱۴۰۴' %></span>
+                    <h5 style="font-weight: 700; margin: 8px 0;"><%= isEn ? 'Industry Leader' : 'پیشرو در صنعت' %></h5>
+                    <p class="text-muted mb-0"><%= isEn ? 'Today Proshut Aria, with over ' + (settings.happy_clients || '300') + ' happy clients and ' + (settings.projects_done || '500') + ' successful projects, is one of the leaders in the urban furniture industry.' : 'امروز پروشات آریا با بیش از ' + (settings.happy_clients || '۳۰۰') + ' مشتری راضی و ' + (settings.projects_done || '۵۰۰') + ' پروژه موفق، یکی از پیشروان صنعت مبلمان شهری است.' %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects -->
+<% if (typeof projects !== 'undefined' && projects.length > 0) { %>
+<section class="section-padding bg-light" style="padding-top:60px">
+    <div class="container">
+        <div class="section-header text-center" data-aos="fade-up">
+            <span class="section-badge"><%= t('our_projects') %></span>
+            <h2 class="section-title"><%= t('notable_projects') %></h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="row g-4 mt-4">
+            <% projects.slice(0, 3).forEach((proj, i) => { %>
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<%= i * 100 %>">
+                <div class="project-page-card">
+                    <div class="project-page-img">
+                        <img src="<%= proj.image %>" alt="<%= proj.title %>" loading="lazy" onerror="this.src='/images/no-image.svg'">
+                        <div class="project-page-overlay"></div>
+                    </div>
+                    <div class="project-page-info">
+                        <h5><%= proj.title %></h5>
+                        <% if (proj.client) { %>
+                        <span class="project-page-client"><i class="fas fa-building me-1"></i><%= proj.client %></span>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+        <div class="text-center mt-5 pt-3">
+            <a href="/projects" class="btn btn-primary"><%= t('view_all_projects') %> <i class="fas fa-arrow-<%= isEn ? 'right' : 'left' %> ms-2"></i></a>
+        </div>
+    </div>
+</section>
+<% } %>
+
+<!-- CTA -->
+<section class="section-padding">
+    <div class="container">
+        <div class="cta-section text-center" data-aos="fade-up">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-8">
+                    <h3><%= t('ready_to_cooperate') %></h3>
+                    <p><%= t('contact_for_more') %></p>
+                    <a href="/contact" class="btn btn-lg mt-3"><i class="fas fa-phone-alt me-2"></i><%= t('contact_us') %></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

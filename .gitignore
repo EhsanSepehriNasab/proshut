@@ -1,0 +1,11 @@
+node_modules/
+proshut.db
+proshut.db-wal
+proshut.db-shm
+*.psd
+*.cdr
+public/images/uploads/
+server.js
+.DS_Store
+**/.DS_Store
+*.log

@@ -1,0 +1,136 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <a href="/support"><%= isEn ? 'Support' : 'پشتیبانی' %></a>
+            <span>/</span>
+            <span class="current"><%= isEn ? 'Track Ticket' : 'پیگیری تیکت' %></span>
+        </nav>
+    </div>
+</section>
+
+<!-- Track Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <!-- Search Form -->
+                <div class="contact-form-wrapper mb-4">
+                    <h3><i class="fas fa-search me-2" style="color: var(--primary-color);"></i><%= isEn ? 'Track Ticket Status' : 'پیگیری وضعیت تیکت' %></h3>
+                    <p class="text-muted mb-3"><%= isEn ? 'Enter your ticket number to check its latest status.' : 'شماره تیکت خود را وارد کنید تا از آخرین وضعیت آن مطلع شوید.' %></p>
+                    <form action="/support/track" method="GET" class="contact-form">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-8">
+                                <label class="form-label"><%= isEn ? 'Ticket Number' : 'شماره تیکت' %></label>
+                                <input type="text" name="ticket" class="form-control" placeholder="<%= isEn ? 'Ticket number (e.g. TK-1001)' : 'شماره تیکت (مثلاً TK-1001)' %>" value="<%= typeof ticketNumber !== 'undefined' && ticketNumber ? ticketNumber : '' %>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search me-2"></i><%= isEn ? 'Search' : 'جستجو' %></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Ticket Result -->
+                <% if (typeof ticket !== 'undefined' && ticket) { %>
+                <div class="contact-form-wrapper" data-aos="fade-up">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+                        <h4 style="font-weight: 700; margin: 0;">
+                            <i class="fas fa-ticket-alt me-2" style="color: var(--primary-color);"></i>
+                            <%= isEn ? 'Ticket Details' : 'جزئیات تیکت' %>
+                        </h4>
+                        <span style="display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+                            <% if (ticket.status === 'open' || ticket.status === 'باز') { %>
+                                background: #e3f2fd; color: #1565c0;
+                            <% } else if (ticket.status === 'in_progress' || ticket.status === 'در حال بررسی') { %>
+                                background: #fff3e0; color: #ef6c00;
+                            <% } else if (ticket.status === 'closed' || ticket.status === 'بسته') { %>
+                                background: #e8f5e9; color: #2e7d32;
+                            <% } else if (ticket.status === 'answered' || ticket.status === 'پاسخ داده شده') { %>
+                                background: #f3e5f5; color: #7b1fa2;
+                            <% } else { %>
+                                background: var(--bg-light); color: var(--text-color);
+                            <% } %>
+                        ">
+                            <% if (ticket.status === 'open') { %><%= isEn ? 'Open' : 'باز' %>
+                            <% } else if (ticket.status === 'in_progress') { %><%= isEn ? 'In Progress' : 'در حال بررسی' %>
+                            <% } else if (ticket.status === 'closed') { %><%= isEn ? 'Closed' : 'بسته شده' %>
+                            <% } else if (ticket.status === 'answered') { %><%= isEn ? 'Answered' : 'پاسخ داده شده' %>
+                            <% } else { %><%= ticket.status %><% } %>
+                        </span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 700; width: 35%; background: var(--bg-light);"><%= isEn ? 'Ticket Number' : 'شماره تیکت' %></td>
+                                    <td dir="ltr"><%= ticket.ticket_number %></td>
+                                </tr>
+                                <% if (ticket.name) { %>
+                                <tr>
+                                    <td style="font-weight: 700; background: var(--bg-light);"><%= isEn ? 'Name' : 'نام' %></td>
+                                    <td><%= ticket.name %></td>
+                                </tr>
+                                <% } %>
+                                <% if (ticket.subject) { %>
+                                <tr>
+                                    <td style="font-weight: 700; background: var(--bg-light);"><%= isEn ? 'Subject' : 'موضوع' %></td>
+                                    <td><%= ticket.subject %></td>
+                                </tr>
+                                <% } %>
+                                <% if (ticket.priority) { %>
+                                <tr>
+                                    <td style="font-weight: 700; background: var(--bg-light);"><%= isEn ? 'Priority' : 'اولویت' %></td>
+                                    <td>
+                                        <% if (ticket.priority === 'high') { %>
+                                            <span style="color: #d32f2f; font-weight: 600;"><%= isEn ? 'Urgent' : 'فوری' %></span>
+                                        <% } else if (ticket.priority === 'normal') { %>
+                                            <span style="color: #1565c0; font-weight: 600;"><%= isEn ? 'Normal' : 'عادی' %></span>
+                                        <% } else if (ticket.priority === 'low') { %>
+                                            <span style="color: #2e7d32; font-weight: 600;"><%= isEn ? 'Low' : 'کم اهمیت' %></span>
+                                        <% } else { %><%= ticket.priority %><% } %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                                <% if (ticket.created_at) { %>
+                                <tr>
+                                    <td style="font-weight: 700; background: var(--bg-light);"><%= isEn ? 'Date Submitted' : 'تاریخ ثبت' %></td>
+                                    <td><%= new Date(ticket.created_at).toLocaleDateString(isEn ? 'en-US' : 'fa-IR') %></td>
+                                </tr>
+                                <% } %>
+                                <% if (ticket.message) { %>
+                                <tr>
+                                    <td style="font-weight: 700; background: var(--bg-light);"><%= isEn ? 'Request Description' : 'شرح درخواست' %></td>
+                                    <td style="line-height: 2;"><%= ticket.message %></td>
+                                </tr>
+                                <% } %>
+                                <% if (ticket.reply) { %>
+                                <tr>
+                                    <td style="font-weight: 700; background: var(--bg-light);"><%= isEn ? 'Expert Response' : 'پاسخ کارشناس' %></td>
+                                    <td style="line-height: 2; background: #f1f8e9;"><%- ticket.reply %></td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <% } else if (typeof ticketNumber !== 'undefined' && ticketNumber) { %>
+                <div class="text-center py-5" data-aos="fade-up">
+                    <i class="fas fa-search" style="font-size: 4rem; color: var(--border-color); margin-bottom: 20px;"></i>
+                    <h4 style="color: var(--text-light);"><%= isEn ? 'No ticket found with this number' : 'تیکتی با این شماره یافت نشد' %></h4>
+                    <p class="text-muted"><%= isEn ? 'Please check the ticket number and try again.' : 'لطفاً شماره تیکت را بررسی کرده و مجدداً تلاش کنید.' %></p>
+                    <a href="/support" class="btn btn-primary mt-3"><i class="fas fa-plus me-2"></i><%= isEn ? 'Submit New Ticket' : 'ثبت تیکت جدید' %></a>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer') %>

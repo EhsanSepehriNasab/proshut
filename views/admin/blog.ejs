@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت مقالات</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">مدیریت مقالات</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="row g-4">
+                <!-- Add Blog Post Form -->
+                <div class="col-lg-5">
+                    <div class="card card-custom">
+                        <div class="card-header" id="formHeader">افزودن مقاله جدید</div>
+                        <div class="card-body">
+                            <form action="/admin/blog" method="POST" enctype="multipart/form-data" id="blogForm">
+                                <div class="mb-3">
+                                    <label class="form-label">عنوان مقاله</label>
+                                    <input type="text" class="form-control" name="title" id="title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">اسلاگ (URL)</label>
+                                    <input type="text" class="form-control" name="slug" id="slug" dir="ltr">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">خلاصه</label>
+                                    <textarea class="form-control" name="excerpt" id="excerpt" rows="2" placeholder="خلاصه کوتاه مقاله"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">محتوا</label>
+                                    <textarea class="form-control" name="content" id="content" rows="8" required placeholder="متن کامل مقاله"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">دسته‌بندی</label>
+                                    <input type="text" class="form-control" name="category" id="category" placeholder="مثلا: آموزشی، اخبار">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">تصویر شاخص</label>
+                                    <input type="file" class="form-control" name="image" accept="image/*">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">عنوان متا (SEO)</label>
+                                    <input type="text" class="form-control" name="meta_title" id="meta_title">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">توضیحات متا (SEO)</label>
+                                    <textarea class="form-control" name="meta_description" id="meta_description" rows="2"></textarea>
+                                </div>
+                                <hr>
+                                <h6 class="mb-3"><i class="fas fa-globe me-1"></i> English</h6>
+                                <div class="mb-3">
+                                    <label class="form-label">Category (EN)</label>
+                                    <input type="text" class="form-control" name="category_en" id="category_en" dir="ltr" placeholder="e.g. Educational, News">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Title (EN)</label>
+                                    <input type="text" class="form-control" name="title_en" id="title_en" dir="ltr">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Excerpt (EN)</label>
+                                    <textarea class="form-control" name="excerpt_en" id="excerpt_en" rows="2" dir="ltr"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Content (EN)</label>
+                                    <textarea class="form-control" name="content_en" id="content_en" rows="6" dir="ltr"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Meta Title (EN)</label>
+                                    <input type="text" class="form-control" name="meta_title_en" id="meta_title_en" dir="ltr">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Meta Description (EN)</label>
+                                    <textarea class="form-control" name="meta_description_en" id="meta_description_en" rows="2" dir="ltr"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-accent w-100" id="submitBtn">
+                                    <i class="fas fa-plus me-1"></i> انتشار مقاله
+                                </button>
+                                <button type="button" class="btn btn-secondary w-100 mt-2" id="cancelEdit" style="display:none;" onclick="resetForm()">
+                                    <i class="fas fa-times me-1"></i> انصراف
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Posts List -->
+                <div class="col-lg-7">
+                    <div class="card card-custom">
+                        <div class="card-header">لیست مقالات</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>عنوان</th>
+                                            <th>دسته‌بندی</th>
+                                            <th>تاریخ</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (posts && posts.length > 0) { %>
+                                            <% posts.forEach(function(post, index) { %>
+                                                <tr>
+                                                    <td><%= index + 1 %></td>
+                                                    <td><%= post.title %></td>
+                                                    <td><%= post.category || '-' %></td>
+                                                    <td><%= new Date(post.created_at).toLocaleDateString('fa-IR') %></td>
+                                                    <td>
+                                                        <button type="button" class="btn-action text-white me-1" style="background: #3498db;"
+                                                            data-id="<%= post.id %>"
+                                                            data-title="<%- post.title.replace(/"/g, '&quot;') %>"
+                                                            data-slug="<%- post.slug %>"
+                                                            data-excerpt="<%- (post.excerpt || '').replace(/"/g, '&quot;') %>"
+                                                            data-content="<%- (post.content || '').replace(/"/g, '&quot;') %>"
+                                                            data-category="<%- post.category || '' %>"
+                                                            data-meta-title="<%- (post.meta_title || '').replace(/"/g, '&quot;') %>"
+                                                            data-meta-desc="<%- (post.meta_description || '').replace(/"/g, '&quot;') %>"
+                                                            data-category-en="<%- (post.category_en || '').replace(/"/g, '&quot;') %>"
+                                                            data-title-en="<%- (post.title_en || '').replace(/"/g, '&quot;') %>"
+                                                            data-excerpt-en="<%- (post.excerpt_en || '').replace(/"/g, '&quot;') %>"
+                                                            data-content-en="<%- (post.content_en || '').replace(/"/g, '&quot;') %>"
+                                                            data-meta-title-en="<%- (post.meta_title_en || '').replace(/"/g, '&quot;') %>"
+                                                            data-meta-desc-en="<%- (post.meta_description_en || '').replace(/"/g, '&quot;') %>"
+                                                            onclick="editBlog(this)">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <form action="/admin/blog/<%= post.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('آیا از حذف این مقاله مطمئن هستید؟')">
+                                                            <button type="submit" class="btn-action text-white" style="background: #e74c3c;">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <tr><td colspan="5" class="text-center text-muted py-4">مقاله‌ای وجود ندارد</td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function editBlog(btn) {
+        var id = btn.getAttribute('data-id');
+        document.getElementById('formHeader').textContent = 'ویرایش مقاله';
+        document.getElementById('blogForm').action = '/admin/blog/' + id + '/edit';
+        document.getElementById('title').value = btn.getAttribute('data-title');
+        document.getElementById('slug').value = btn.getAttribute('data-slug');
+        document.getElementById('excerpt').value = btn.getAttribute('data-excerpt');
+        document.getElementById('content').value = btn.getAttribute('data-content');
+        document.getElementById('category').value = btn.getAttribute('data-category');
+        document.getElementById('meta_title').value = btn.getAttribute('data-meta-title');
+        document.getElementById('meta_description').value = btn.getAttribute('data-meta-desc');
+        document.getElementById('category_en').value = btn.getAttribute('data-category-en');
+        document.getElementById('title_en').value = btn.getAttribute('data-title-en');
+        document.getElementById('excerpt_en').value = btn.getAttribute('data-excerpt-en');
+        document.getElementById('content_en').value = btn.getAttribute('data-content-en');
+        document.getElementById('meta_title_en').value = btn.getAttribute('data-meta-title-en');
+        document.getElementById('meta_description_en').value = btn.getAttribute('data-meta-desc-en');
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save me-1"></i> ذخیره تغییرات';
+        document.getElementById('cancelEdit').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function resetForm() {
+        document.getElementById('formHeader').textContent = 'افزودن مقاله جدید';
+        document.getElementById('blogForm').action = '/admin/blog';
+        document.getElementById('blogForm').reset();
+        document.getElementById('submitBtn').innerHTML = '<i class="fas fa-plus me-1"></i> انتشار مقاله';
+        document.getElementById('cancelEdit').style.display = 'none';
+    }
+    </script>
+</body>
+</html>

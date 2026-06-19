@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت برندها</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">مدیریت برندها</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="row g-4">
+                <!-- Add Brand Form -->
+                <div class="col-lg-4">
+                    <div class="card card-custom">
+                        <div class="card-header">افزودن برند جدید</div>
+                        <div class="card-body">
+                            <form action="/admin/brands" method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label class="form-label">نام برند</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">اسلاگ (URL)</label>
+                                    <input type="text" class="form-control" name="slug" dir="ltr">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">وب‌سایت</label>
+                                    <input type="url" class="form-control" name="website" dir="ltr" placeholder="https://...">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">لوگوی برند</label>
+                                    <input type="file" class="form-control" name="logo" accept="image/*">
+                                </div>
+                                <button type="submit" class="btn btn-accent w-100">
+                                    <i class="fas fa-plus me-1"></i> افزودن برند
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brands List -->
+                <div class="col-lg-8">
+                    <div class="card card-custom">
+                        <div class="card-header">لیست برندها</div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>لوگو</th>
+                                            <th>نام</th>
+                                            <th>اسلاگ</th>
+                                            <th>وب‌سایت</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (brands && brands.length > 0) { %>
+                                            <% brands.forEach(function(brand, index) { %>
+                                                <tr>
+                                                    <td><%= index + 1 %></td>
+                                                    <td>
+                                                        <% if (brand.logo) { %>
+                                                            <img src="/uploads/<%= brand.logo %>" alt="<%= brand.name %>" class="brand-logo">
+                                                        <% } else { %>
+                                                            <div class="brand-logo d-flex align-items-center justify-content-center" style="display: inline-flex; background: #e9ecef; font-size: 16px; font-weight: 800; color: #ADAB15;">
+                                                                <%= brand.name.charAt(0) %>
+                                                            </div>
+                                                        <% } %>
+                                                    </td>
+                                                    <td><%= brand.name %></td>
+                                                    <td dir="ltr" class="text-end text-muted"><%= brand.slug || '-' %></td>
+                                                    <td>
+                                                        <% if (brand.website) { %>
+                                                            <a href="<%= brand.website %>" target="_blank" dir="ltr" style="font-size: 12px; color: #3498db;">
+                                                                <i class="fas fa-external-link-alt"></i>
+                                                            </a>
+                                                        <% } else { %>
+                                                            <span class="text-muted">-</span>
+                                                        <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <form action="/admin/brands/<%= brand.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('آیا از حذف این برند مطمئن هستید؟')">
+                                                            <button type="submit" class="btn-action text-white" style="background: #e74c3c;">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <% }); %>
+                                        <% } else { %>
+                                            <tr><td colspan="6" class="text-center text-muted py-4">برندی وجود ندارد</td></tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

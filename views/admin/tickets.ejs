@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت تیکت‌ها</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h4>پروشات</h4>
+            <small>پنل مدیریت</small>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/admin/dashboard" class="<%= page === 'dashboard' ? 'active' : '' %>"><i class="fas fa-home"></i> داشبورد</a></li>
+            <li><a href="/admin/products" class="<%= page === 'products' ? 'active' : '' %>"><i class="fas fa-box"></i> محصولات</a></li>
+            <li><a href="/admin/categories" class="<%= page === 'categories' ? 'active' : '' %>"><i class="fas fa-folder"></i> دسته‌بندی‌ها</a></li>
+            <li><a href="/admin/projects" class="<%= page === 'projects' ? 'active' : '' %>"><i class="fas fa-project-diagram"></i> پروژه‌ها</a></li>
+            <li><a href="/admin/contacts" class="<%= page === 'contacts' ? 'active' : '' %>"><i class="fas fa-envelope"></i> پیام‌ها</a></li>
+            <li><a href="/admin/tickets" class="<%= page === 'tickets' ? 'active' : '' %>"><i class="fas fa-ticket"></i> تیکت‌ها</a></li>
+            <li><a href="/admin/blog" class="<%= page === 'blog' ? 'active' : '' %>"><i class="fas fa-newspaper"></i> مقالات</a></li>
+            <li><a href="/admin/sliders" class="<%= page === 'sliders' ? 'active' : '' %>"><i class="fas fa-images"></i> اسلایدر</a></li>
+            <li><a href="/admin/brands" class="<%= page === 'brands' ? 'active' : '' %>"><i class="fas fa-copyright"></i> برندها</a></li>
+            <li><a href="/admin/newsletter" class="<%= page === 'newsletter' ? 'active' : '' %>"><i class="fas fa-bell"></i> خبرنامه</a></li>
+            <li><a href="/admin/settings" class="<%= page === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> تنظیمات</a></li>
+            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> خروج</a></li>
+        </ul>
+    </aside>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">مدیریت تیکت‌ها</div>
+            <div class="admin-info">
+                <span class="admin-name"><i class="fas fa-user-circle"></i> <%= admin %></span>
+                <a href="/admin/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> خروج</a>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- Filters -->
+            <div class="d-flex gap-2 mb-4 flex-wrap">
+                <a href="/admin/tickets" class="filter-btn <%= (!currentStatus || currentStatus === 'all') ? 'active' : '' %>">همه</a>
+                <a href="/admin/tickets?status=open" class="filter-btn <%= currentStatus === 'open' ? 'active' : '' %>">
+                    <i class="fas fa-circle text-warning" style="font-size: 8px;"></i> باز
+                </a>
+                <a href="/admin/tickets?status=answered" class="filter-btn <%= currentStatus === 'answered' ? 'active' : '' %>">
+                    <i class="fas fa-circle text-success" style="font-size: 8px;"></i> پاسخ داده شده
+                </a>
+                <a href="/admin/tickets?status=closed" class="filter-btn <%= currentStatus === 'closed' ? 'active' : '' %>">
+                    <i class="fas fa-circle text-secondary" style="font-size: 8px;"></i> بسته شده
+                </a>
+            </div>
+
+            <div class="card card-custom">
+                <div class="card-header">لیست تیکت‌ها</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>نام</th>
+                                    <th>ایمیل</th>
+                                    <th>موضوع</th>
+                                    <th>تاریخ</th>
+                                    <th>وضعیت</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (tickets && tickets.length > 0) { %>
+                                    <% tickets.forEach(function(ticket, index) { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= ticket.name %></td>
+                                            <td dir="ltr" class="text-end"><%= ticket.email %></td>
+                                            <td><%= ticket.subject %></td>
+                                            <td><%= new Date(ticket.created_at).toLocaleDateString('fa-IR') %></td>
+                                            <td>
+                                                <% if (ticket.status === 'open') { %>
+                                                    <span class="badge-status" style="background: #fff3e0; color: #e65100;">باز</span>
+                                                <% } else if (ticket.status === 'answered') { %>
+                                                    <span class="badge-status" style="background: #e8f5e9; color: #2e7d32;">پاسخ داده شده</span>
+                                                <% } else { %>
+                                                    <span class="badge-status" style="background: #eceff1; color: #546e7a;">بسته شده</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/tickets/<%= ticket.id %>" class="btn-view">
+                                                    <i class="fas fa-eye"></i> مشاهده
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                <% } else { %>
+                                    <tr><td colspan="7" class="text-center text-muted py-4">تیکتی وجود ندارد</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

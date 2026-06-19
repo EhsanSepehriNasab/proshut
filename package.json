@@ -1,0 +1,25 @@
+{
+  "name": "pro-shot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^12.10.0",
+    "body-parser": "^2.2.2",
+    "compression": "^1.8.1",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.2.0",
+    "multer": "^2.1.1",
+    "sitemap": "^9.0.1"
+  }
+}

@@ -1,0 +1,323 @@
+<%- include('../partials/header') %>
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <nav class="breadcrumb-nav">
+            <a href="/"><%= t('home') %></a>
+            <span>/</span>
+            <% if (activeSubcategory) { %>
+                <a href="/products"><%= t('products') %></a>
+                <span>/</span>
+                <% if (activeCategory) { %>
+                    <a href="/products?category=<%= activeCategory.slug %>"><%= activeCategory.name %></a>
+                    <span>/</span>
+                <% } %>
+                <span class="current"><%= activeSubcategory.name %></span>
+            <% } else if (activeCategory) { %>
+                <a href="/products"><%= t('products') %></a>
+                <span>/</span>
+                <span class="current"><%= activeCategory.name %></span>
+            <% } else { %>
+                <span class="current"><%= t('products') %></span>
+            <% } %>
+        </nav>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4" data-aos="fade-up">
+                <div class="sidebar-widget mb-4">
+                    <h4><i class="fas fa-list me-2"></i><%= t('categories') %></h4>
+                    <ul class="category-list">
+                        <li class="<%= !activeCategory ? 'active' : '' %>">
+                            <a href="/products"><i class="fas fa-th-large"></i> <%= t('all_products') %></a>
+                        </li>
+                        <% categories.forEach(cat => { %>
+                        <li class="<%= activeCategory && activeCategory.id === cat.id ? 'active' : '' %>" style="margin-bottom: 2px;">
+                            <div class="cat-row">
+                                <a href="/products?category=<%= cat.slug %>">
+                                    <i class="<%= cat.icon || 'fas fa-folder' %>"></i> <%= cat.name %>
+                                </a>
+                                <% if (cat.subcategories && cat.subcategories.length > 0) { %>
+                                    <button class="cat-toggle" type="button" aria-label="زیردسته‌ها">
+                                        <i class="fas fa-chevron-<%= activeCategory && activeCategory.id === cat.id ? 'up' : 'down' %>"></i>
+                                    </button>
+                                <% } %>
+                            </div>
+                            <% if (cat.subcategories && cat.subcategories.length > 0) { %>
+                            <ul class="subcategory-list" style="list-style: none; padding: 5px 0 5px 15px; margin: 0; <%= activeCategory && activeCategory.id === cat.id ? '' : 'display:none;' %>">
+                                <% cat.subcategories.forEach(sub => { %>
+                                <li>
+                                    <a href="/products?category=<%= cat.slug %>&sub=<%= sub.slug %>"
+                                       style="display: block; padding: 5px 10px; font-size: 0.85rem; color: <%= activeSubcategory && activeSubcategory.id === sub.id ? 'var(--primary-color)' : 'var(--text-light)' %>; font-weight: <%= activeSubcategory && activeSubcategory.id === sub.id ? '700' : '400' %>; text-decoration: none; border-radius: 4px; transition: all 0.2s; background: <%= activeSubcategory && activeSubcategory.id === sub.id ? 'var(--bg-light)' : 'transparent' %>;">
+                                        <i class="fas fa-angle-<%= isEn ? 'right' : 'left' %> me-1"></i><%= sub.name %>
+                                    </a>
+                                </li>
+                                <% }); %>
+                            </ul>
+                            <% } %>
+                        </li>
+                        <% }); %>
+                    </ul>
+                </div>
+
+                <!-- CTA Sidebar -->
+                <div class="sidebar-cta">
+                    <div class="sidebar-cta-bg"></div>
+                    <div class="sidebar-cta-content">
+                        <div class="sidebar-cta-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h5><%= t('need_consulting') %></h5>
+                        <p><%= t('experts_ready') %></p>
+                        <div class="sidebar-cta-phone">
+                            <i class="fas fa-phone-alt"></i>
+                            <span dir="ltr"><%= settings.phone %></span>
+                        </div>
+                        <a href="https://wa.me/<%= settings.whatsapp %>" target="_blank" rel="noopener" class="sidebar-cta-btn">
+                            <i class="fab fa-whatsapp me-2"></i><%= t('send_message') %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9" id="productsArea">
+                <!-- Header -->
+                <div class="mb-3" data-aos="fade-up">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div>
+                            <% if (activeCategory) { %>
+                                <h3 class="mb-0" style="font-weight: 700;"><%= activeCategory.name %></h3>
+                            <% } else { %>
+                                <h3 class="mb-0" style="font-weight: 700;"><%= t('all_products') %></h3>
+                            <% } %>
+                        </div>
+                        <span class="text-muted"><%= isEn ? pagination.total : pagination.total.toString().replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]) %> <%= t('product_count') %></span>
+                    </div>
+
+                    <% if (activeCategory && activeCategory.subcategories && activeCategory.subcategories.length > 0) { %>
+                    <div class="mt-3 d-flex flex-wrap gap-2" id="subPills">
+                        <a href="/products?category=<%= activeCategory.slug %>" class="btn btn-sm sub-pill <%= !activeSubcategory ? 'active' : '' %>"><%= t('all') %></a>
+                        <% activeCategory.subcategories.forEach(sub => { %>
+                        <a href="/products?category=<%= activeCategory.slug %>&sub=<%= sub.slug %>" class="btn btn-sm sub-pill <%= activeSubcategory && activeSubcategory.id === sub.id ? 'active' : '' %>"><%= sub.name %></a>
+                        <% }); %>
+                    </div>
+                    <% } %>
+                    <hr class="mt-3">
+                </div>
+
+                <div id="productCards">
+                <% if (products.length === 0) { %>
+                    <div class="text-center py-5" data-aos="fade-up">
+                        <i class="fas fa-box-open" style="font-size: 4rem; color: var(--border-color); margin-bottom: 20px;"></i>
+                        <h4 style="color: var(--text-light);"><%= t('no_products') %></h4>
+                        <p class="text-muted"><%= t('no_products_desc') %></p>
+                        <a href="/products" class="btn btn-primary mt-2"><%= t('all_products') %></a>
+                    </div>
+                <% } else { %>
+                <div class="row g-4">
+                    <% products.forEach((product, i) => { %>
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<%= (i % 3) * 100 %>">
+                        <article class="product-card">
+                            <div class="product-image">
+                                <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy" onerror="this.src='/images/no-image.svg'">
+                                <div class="product-overlay">
+                                    <a href="/product/<%= product.slug %>" class="btn btn-light btn-sm"><%= t('view_details') %></a>
+                                </div>
+                                <% if (product.is_featured) { %><span class="product-badge"><%= t('featured') %></span><% } %>
+                                <% if (product.special_status && product.special_status.trim()) { %>
+                                <span class="product-badge" style="top: auto; bottom: 10px; background: #17a2b8;"><%= product.special_status %></span>
+                                <% } %>
+                            </div>
+                            <div class="product-info">
+                                <span class="product-category"><%= product.category_name %></span>
+                                <h5><a href="/product/<%= product.slug %>"><%= product.name %></a></h5>
+                                <% if (product.short_description) { %>
+                                <p style="font-size: 0.85rem; color: var(--text-light); margin: 6px 0 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;"><%= product.short_description %></p>
+                                <% } %>
+                                <% if (product.product_code) { %>
+                                <small style="color: #999; font-size: 0.75rem; display: block; margin-top: 4px;"><%= t('product_code') %>: <span dir="ltr"><%= product.product_code %></span></small>
+                                <% } %>
+                            </div>
+                        </article>
+                    </div>
+                    <% }); %>
+                </div>
+
+                <!-- Pagination -->
+                <%
+                  const toPersian = isEn ? (n => n.toString()) : (n => n.toString().replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]));
+                  const qs = activeSubcategory ? 'category=' + activeCategory.slug + '&sub=' + activeSubcategory.slug : (activeCategory ? 'category=' + activeCategory.slug : '');
+                %>
+                <% if (pagination.totalPages > 1) { %>
+                <nav class="mt-5 d-flex justify-content-center">
+                    <ul class="pagination-custom">
+                        <% if (pagination.page > 1) { %>
+                        <li><a href="?<%= qs %>&page=<%= pagination.page - 1 %>" class="pg-btn"><i class="fas fa-chevron-<%= isEn ? 'left' : 'right' %>"></i></a></li>
+                        <% } %>
+                        <% for (let p = 1; p <= pagination.totalPages; p++) { %>
+                        <li><a href="?<%= qs %>&page=<%= p %>" class="pg-btn <%= p === pagination.page ? 'pg-active' : '' %>"><%= toPersian(p) %></a></li>
+                        <% } %>
+                        <% if (pagination.page < pagination.totalPages) { %>
+                        <li><a href="?<%= qs %>&page=<%= pagination.page + 1 %>" class="pg-btn"><i class="fas fa-chevron-<%= isEn ? 'right' : 'left' %>"></i></a></li>
+                        <% } %>
+                    </ul>
+                </nav>
+                <% } %>
+                <% } %>
+                </div><!-- /productCards -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+var txt = {
+    view_details: '<%= t("view_details") %>',
+    featured: '<%= t("featured") %>',
+    product_count: '<%= t("product_count") %>',
+    no_products: '<%= t("no_products") %>',
+    no_products_desc: '<%= t("no_products_desc") %>',
+    all_products: '<%= t("all_products") %>',
+    all: '<%= t("all") %>',
+    product_code: '<%= t("product_code") %>'
+};
+var isEn = <%= isEn ? 'true' : 'false' %>;
+// Scroll to products on load if category selected on mobile
+if (window.innerWidth <= 768 && (location.search.includes('category=') || location.search.includes('sub='))) {
+    var el = document.getElementById('productsArea');
+    if (el) setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
+}
+
+// AJAX product filtering
+document.addEventListener('click', function(e) {
+    var link = e.target.closest('.category-list a, .sub-pill, .subcategory-list a');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (!href || !href.startsWith('/products')) return;
+    e.preventDefault();
+
+    // Update URL without reload
+    history.pushState(null, '', href);
+
+    // Parse query params
+    var url = new URL(href, location.origin);
+    var cat = url.searchParams.get('category') || '';
+    var sub = url.searchParams.get('sub') || '';
+    var apiUrl = '/api/products?category=' + encodeURIComponent(cat) + '&sub=' + encodeURIComponent(sub);
+
+    // Show loading skeleton
+    var cards = document.getElementById('productCards');
+    var skeletonHtml = '<div class="row g-4">';
+    for (var s = 0; s < 6; s++) {
+        skeletonHtml += '<div class="col-lg-4 col-md-6"><div class="skeleton-card"><div class="skeleton-img skeleton-pulse"></div><div class="skeleton-body"><div class="skeleton-line skeleton-pulse" style="width:40%"></div><div class="skeleton-line skeleton-pulse" style="width:80%"></div><div class="skeleton-line skeleton-pulse" style="width:60%"></div></div></div></div>';
+    }
+    skeletonHtml += '</div>';
+    cards.innerHTML = skeletonHtml;
+
+    var startTime = Date.now();
+    fetch(apiUrl).then(function(r) { return r.json(); }).then(function(data) {
+        var elapsed = Date.now() - startTime;
+        var minDelay = Math.max(0, 400 - elapsed);
+        return new Promise(function(resolve) { setTimeout(function() { resolve(data); }, minDelay); });
+    }).then(function(data) {
+        // Update title
+        var titleEl = document.querySelector('#productsArea h3');
+        if (titleEl) titleEl.textContent = data.title;
+
+        // Update count
+        var countEl = document.querySelector('#productsArea .text-muted');
+        if (countEl) countEl.textContent = (isEn ? data.total : data.total.toString().replace(/[0-9]/g, function(d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; })) + ' ' + txt.product_count;
+
+        // Update sub-pills
+        var pillsContainer = document.getElementById('subPills');
+        if (data.activeCategory && data.subcategories && data.subcategories.length > 0) {
+            var pillsHtml = '<a href="/products?category=' + data.activeCategory.slug + '" class="btn btn-sm sub-pill ' + (!data.activeSubcategory ? 'active' : '') + '">' + txt.all + '</a>';
+            data.subcategories.forEach(function(s) {
+                var isActive = data.activeSubcategory && data.activeSubcategory.id === s.id;
+                pillsHtml += '<a href="/products?category=' + data.activeCategory.slug + '&sub=' + s.slug + '" class="btn btn-sm sub-pill ' + (isActive ? 'active' : '') + '">' + s.name + '</a>';
+            });
+            if (pillsContainer) {
+                pillsContainer.innerHTML = pillsHtml;
+                pillsContainer.style.display = '';
+            } else {
+                var hr = document.querySelector('#productsArea hr');
+                if (hr) {
+                    var div = document.createElement('div');
+                    div.id = 'subPills';
+                    div.className = 'mt-3 d-flex flex-wrap gap-2';
+                    div.innerHTML = pillsHtml;
+                    hr.parentNode.insertBefore(div, hr);
+                }
+            }
+        } else if (pillsContainer) {
+            pillsContainer.style.display = 'none';
+        }
+
+        // Update sidebar active states
+        document.querySelectorAll('.category-list li').forEach(function(li) { li.classList.remove('active'); });
+        document.querySelectorAll('.subcategory-list a').forEach(function(a) {
+            a.style.color = 'var(--text-light)';
+            a.style.fontWeight = '400';
+            a.style.background = 'transparent';
+        });
+        if (cat) {
+            document.querySelectorAll('.category-list a[href*="category=' + cat + '"]').forEach(function(a) {
+                var li = a.closest('li');
+                if (li) li.classList.add('active');
+            });
+        }
+        if (sub) {
+            document.querySelectorAll('.subcategory-list a[href*="sub=' + sub + '"]').forEach(function(a) {
+                a.style.color = 'var(--primary-color)';
+                a.style.fontWeight = '700';
+                a.style.background = 'var(--bg-light)';
+            });
+        }
+        if (!cat && !sub) {
+            var allLink = document.querySelector('.category-list li:first-child');
+            if (allLink) allLink.classList.add('active');
+        }
+
+        // Update product cards
+        var html = '';
+        if (data.products.length === 0) {
+            html = '<div class="text-center py-5"><i class="fas fa-box-open" style="font-size:4rem;color:var(--border-color);margin-bottom:20px;"></i><h4 style="color:var(--text-light);">' + txt.no_products + '</h4><p class="text-muted">' + txt.no_products_desc + '</p><a href="/products" class="btn btn-primary mt-2">' + txt.all_products + '</a></div>';
+        } else {
+            html = '<div class="row g-4">';
+            data.products.forEach(function(p) {
+                html += '<div class="col-lg-4 col-md-6"><article class="product-card"><div class="product-image">';
+                html += '<img src="' + (p.image || '/images/no-image.svg') + '" alt="' + p.name + '" loading="lazy" onerror="this.src=\'/images/no-image.svg\'">';
+                html += '<div class="product-overlay"><a href="/product/' + p.slug + '" class="btn btn-light btn-sm">' + txt.view_details + '</a></div>';
+                if (p.is_featured) html += '<span class="product-badge">' + txt.featured + '</span>';
+                if (p.special_status && p.special_status.trim()) html += '<span class="product-badge" style="top:auto;bottom:10px;background:#17a2b8;">' + p.special_status + '</span>';
+                html += '</div><div class="product-info"><span class="product-category">' + (p.category_name || '') + '</span>';
+                html += '<h5><a href="/product/' + p.slug + '">' + p.name + '</a></h5>';
+                if (p.short_description) html += '<p style="font-size:.85rem;color:var(--text-light);margin:6px 0 0;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">' + p.short_description + '</p>';
+                if (p.product_code) html += '<small style="color:#999;font-size:.75rem;display:block;margin-top:4px;">' + txt.product_code + ': <span dir="ltr">' + p.product_code + '</span></small>';
+                html += '</div></article></div>';
+            });
+            html += '</div>';
+        }
+        cards.innerHTML = html;
+
+        // Scroll to products with offset for sticky navbar
+        var area = document.getElementById('productsArea');
+        var y = area.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }).catch(function() {
+        // Fallback to normal navigation
+        location.href = href;
+    });
+});
+
+// Handle browser back/forward
+window.addEventListener('popstate', function() { location.reload(); });
+</script>
+<%- include('../partials/footer') %>
