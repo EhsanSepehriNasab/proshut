@@ -354,12 +354,12 @@ seedIfEmpty('products', () => {
   const s = db.prepare(`INSERT INTO products
     (name, name_en, slug, category_id, image, short_description, short_description_en,
      description, description_en, full_description, full_description_en,
-     specs, specs_en, tags, sections, product_code, special_status, is_featured,
+     specs, specs_en, tags, tags_en, sections, sections_en, product_code, special_status, is_featured,
      meta_title, meta_description, meta_title_en, meta_description_en)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
   const getCatId = slug => db.prepare('SELECT id FROM categories WHERE slug=?').get(slug).id;
-  const P = (name,name_en,slug,cat,img,short,short_en,desc,desc_en,full,full_en,specs,specs_en,tags,secs,code,status,feat,mt,md,mt_en,md_en) =>
-    s.run(name,name_en,slug,getCatId(cat),img,short,short_en,desc,desc_en,full,full_en,specs,specs_en,tags,secs,code,status,feat,mt,md,mt_en,md_en);
+  const P = (name,name_en,slug,cat,img,short,short_en,desc,desc_en,full,full_en,specs,specs_en,tags,tags_en,secs,secs_en,code,status,feat,mt,md,mt_en,md_en) =>
+    s.run(name,name_en,slug,getCatId(cat),img,short,short_en,desc,desc_en,full,full_en,specs,specs_en,tags,tags_en,secs,secs_en,code,status,feat,mt,md,mt_en,md_en);
 
   // ── مخزن زباله گالوانیزه ──
   P('مخزن زباله فلزی مکعب ۱۱۰۰ لیتر','1100L Cubic Metal Waste Bin',
@@ -372,7 +372,7 @@ seedIfEmpty('products', () => {
     '<p>Cubic metal waste bin made from 2mm hot-rolled galvanized sheet.</p><h5>Advantages:</h5><ul><li>Profile chassis on top and bottom</li><li>Heavy-duty bumper</li><li>Welded brackets</li></ul>',
     'ظرفیت|1100 لیتر|ضخامت ورق|2 میلیمتر|چرخ|4 عدد (2 قفل‌دار)|وزن|95 کیلوگرم|جنس|گالوانیزه',
     'Capacity|1100 Liters|Sheet Thickness|2 mm|Wheels|4 pcs (2 lockable)|Weight|95 kg|Material|Galvanized Steel',
-    'مخزن زباله,گالوانیزه,شهرداری,مخزن فلزی','مخزن زباله صنعتی','TB-G-1100','',1,
+    'مخزن زباله,گالوانیزه,شهرداری,مخزن فلزی','waste bin,galvanized,municipal,metal bin','مخزن زباله صنعتی','Industrial Waste Bins','TB-G-1100','',1,
     'مخزن زباله فلزی ۱۱۰۰ لیتر | پروشات','مخزن زباله فلزی گالوانیزه ۱۱۰۰ لیتر',
     '1100L Metal Waste Bin | Proshut','1100L Galvanized Metal Waste Bin');
 
@@ -387,7 +387,7 @@ seedIfEmpty('products', () => {
     '<p>Made from heavy-density polyethylene (HDPE) by injection molding. Resistant to chemicals and weather conditions.</p>',
     'ظرفیت|660 لیتر|جنس|HDPE پلی‌اتیلن سنگین|چرخ|4 لاستیکی|مقاومت UV|دارد|وزن|48 کیلوگرم',
     'Capacity|660 Liters|Material|HDPE Heavy Polyethylene|Wheels|4 Rubber|UV Resistance|Yes|Weight|48 kg',
-    'مخزن پلاستیکی,پلی اتیلن,سطل زباله','مخزن زباله پلاستیکی','TB-PE-660','',1,
+    'مخزن پلاستیکی,پلی اتیلن,سطل زباله','plastic bin,polyethylene,waste bin','مخزن زباله پلاستیکی','Plastic Waste Bins','TB-PE-660','',1,
     'مخزن پلی‌اتیلنی ۶۶۰ لیتر | پروشات','مخزن زباله پلی‌اتیلنی ۶۶۰ لیتر',
     '660L Polyethylene Waste Bin | Proshut','660L Polyethylene Waste Bin');
 
@@ -402,7 +402,7 @@ seedIfEmpty('products', () => {
     '<p>Underground waste disposal system with high capacity. Only the inlet hatch is visible at street level.</p><h5>Advantages:</h5><ul><li>Eliminates unpleasant odors</li><li>Beautifies urban landscape</li><li>Reduces emptying frequency</li></ul>',
     'ظرفیت|5000 لیتر|عمق نصب|2.5 متر|سیستم تخلیه|هیدرولیکی|جنس|فولاد ضد زنگ|عمر مفید|25+ سال',
     'Capacity|5000 Liters|Installation Depth|2.5 m|Emptying System|Hydraulic|Material|Stainless Steel|Service Life|25+ Years',
-    'مخزن زیرزمینی,زباله شهری,مدرن','مخزن زباله شهری','TB-UG-5M','',1,
+    'مخزن زیرزمینی,زباله شهری,مدرن','underground bin,urban waste,modern','مخزن زباله شهری','Urban Waste Bins','TB-UG-5M','',1,
     'مخزن زیرزمینی ۵ مترمکعب | پروشات','مخزن زباله زیرزمینی ۵ مترمکعب',
     '5m³ Underground Waste Bin | Proshut','5m³ Underground Waste Bin');
 
@@ -417,7 +417,7 @@ seedIfEmpty('products', () => {
     '<p>Spare wheel suitable for 770 and 1100-liter bins. Industrial bearing with long service life.</p>',
     'قطر|200 میلیمتر|نوع|لاستیکی با رینگ فلزی|بلبرینگ|صنعتی|تحمل بار|200 کیلوگرم',
     'Diameter|200 mm|Type|Rubber with Metal Rim|Bearing|Industrial|Load Capacity|200 kg',
-    'چرخ مخزن,قطعات یدکی,چرخ زباله','قطعات یدکی','TB-WH-200','',1,
+    'چرخ مخزن,قطعات یدکی,چرخ زباله','bin wheel,spare parts,waste wheel','قطعات یدکی','Spare Parts','TB-WH-200','',1,
     'چرخ مخزن زباله ۲۰۰ میلیمتر | پروشات','چرخ یدکی مخزن زباله',
     '200mm Waste Bin Wheel | Proshut','Spare wheel for waste bins');
 
@@ -432,7 +432,7 @@ seedIfEmpty('products', () => {
     '<p>Combination of galvanized steel and thermowood. Resistant to corrosion and rust.</p>',
     'بدنه|فولاد گالوانیزه|نشیمن|چوب ترموود|ابعاد|180x60x80 cm|وزن|45 kg|ظرفیت|3 نفر',
     'Body|Galvanized Steel|Seat|Thermowood|Dimensions|180x60x80 cm|Weight|45 kg|Capacity|3 Persons',
-    'نیمکت,پارکی,چوب و فلز,مبلمان شهری','مبلمان شهری','PB-M-ROYAL','',1,
+    'نیمکت,پارکی,چوب و فلز,مبلمان شهری','bench,park,wood and metal,urban furniture','مبلمان شهری','Urban Furniture','PB-M-ROYAL','',1,
     'نیمکت پارکی رویال | پروشات','نیمکت پارکی چوب و فلز رویال',
     'Royal Park Bench | Proshut','Wood and metal park bench Royal model');
 
@@ -447,7 +447,7 @@ seedIfEmpty('products', () => {
     '<p>Cast iron legs with classic Victorian pattern. Seat made from Russian wood treated with oil.</p>',
     'پایه|چدن|نشیمن|چوب روسی|ابعاد|160x55x75 cm|وزن|60 kg',
     'Legs|Cast Iron|Seat|Russian Wood|Dimensions|160x55x75 cm|Weight|60 kg',
-    'نیمکت چدنی,کلاسیک,ویکتوریا','مبلمان شهری','PB-CI-VIC','',1,
+    'نیمکت چدنی,کلاسیک,ویکتوریا','cast iron bench,classic,victoria','مبلمان شهری','Urban Furniture','PB-CI-VIC','',1,
     'نیمکت چدنی ویکتوریا | پروشات','نیمکت چدنی کلاسیک ویکتوریا',
     'Victoria Cast Iron Bench | Proshut','Classic Victorian cast iron bench');
 
@@ -462,7 +462,7 @@ seedIfEmpty('products', () => {
     '<p>Includes slide, swing, suspension bridge, and climbing tower. All materials comply with EN 1176 standards.</p>',
     'رده سنی|3 تا 12 سال|ابعاد|8x6x3.5 متر|سازه|فولاد گالوانیزه|سرسره|پلی‌اتیلن|استاندارد|EN 1176',
     'Age Group|3 to 12 years|Dimensions|8x6x3.5 m|Structure|Galvanized Steel|Slide|Polyethylene|Standard|EN 1176',
-    'مجموعه بازی,سرسره,تاب,پارک کودک','وسایل بازی کودکان','PG-C-SHADI','',1,
+    'مجموعه بازی,سرسره,تاب,پارک کودک','playground set,slide,swing,children park','وسایل بازی کودکان','Children Play Equipment','PG-C-SHADI','',1,
     'مجموعه بازی پارک شادی | پروشات','مجموعه بازی کودکان پارک شادی',
     'Shadi Park Playground Set | Proshut','Combined children playground set');
 
@@ -477,7 +477,7 @@ seedIfEmpty('products', () => {
     '<p>Thick steel tube structure with anti-shock EVA seats. Suitable for parks and nurseries.</p>',
     'ظرفیت|2 نفر|سازه|لوله فولادی 3mm|ارتفاع|2.5 متر|صندلی|EVA ضد ضربه',
     'Capacity|2 Persons|Structure|3mm Steel Tube|Height|2.5 m|Seat|Anti-shock EVA',
-    'تاب,فلزی,پارکی,دو نفره','وسایل بازی کودکان','SW-DBL-001','',1,
+    'تاب,فلزی,پارکی,دو نفره','swing,metal,park,double','وسایل بازی کودکان','Children Play Equipment','SW-DBL-001','',1,
     'تاب دو نفره فلزی | پروشات','تاب دو نفره فلزی پارکی',
     'Double Metal Swing | Proshut','Double metal park swing');
 
@@ -492,7 +492,7 @@ seedIfEmpty('products', () => {
     '<p>Polyethylene body with animal designs. Steel spring with long life and safety handles.</p>',
     'ظرفیت|2 نفر|رده سنی|3 تا 8 سال|فنر|فولاد ضد خستگی|بدنه|پلی‌اتیلن',
     'Capacity|2 Persons|Age Group|3 to 8 years|Spring|Anti-fatigue Steel|Body|Polyethylene',
-    'الاکلنگ,فنری,وسایل بازی','وسایل بازی کودکان','SS-SPR-002','',1,
+    'الاکلنگ,فنری,وسایل بازی','seesaw,spring,playground equipment','وسایل بازی کودکان','Children Play Equipment','SS-SPR-002','',1,
     'الاکلنگ فنری | پروشات','الاکلنگ فنری دو نفره',
     'Double Spring Seesaw | Proshut','Double spring seesaw');
 
@@ -507,7 +507,7 @@ seedIfEmpty('products', () => {
     '<p>Rope net with safety knots. Galvanized steel structure and UV-resistant polyamide rope.</p>',
     'ارتفاع|3 متر|طناب|پلی‌آمید UV مقاوم|سازه|فولاد گالوانیزه|رده سنی|5 تا 14 سال',
     'Height|3 m|Rope|UV-resistant Polyamide|Structure|Galvanized Steel|Age Group|5 to 14 years',
-    'برج طنابی,تور بازی,صعود','وسایل بازی کودکان','NR-SPDR-001','',1,
+    'برج طنابی,تور بازی,صعود','rope tower,net play,climbing','وسایل بازی کودکان','Children Play Equipment','NR-SPDR-001','',1,
     'برج صعود طنابی | پروشات','برج صعود طنابی اسپایدر',
     'Spider Rope Climbing Tower | Proshut','Rope climbing tower Spider model');
 
@@ -522,7 +522,7 @@ seedIfEmpty('products', () => {
     '<p>BPA-free polyethylene material. Foldable and easy to carry.</p>',
     'رده سنی|1 تا 5 سال|ارتفاع|80 cm|جنس|پلی‌اتیلن بدون BPA|وزن|8 kg',
     'Age Group|1 to 5 years|Height|80 cm|Material|BPA-free Polyethylene|Weight|8 kg',
-    'سرسره خانگی,مهدکودک,کودک','وسایل بازی خانگی','NH-SLD-BEAR','',1,
+    'سرسره خانگی,مهدکودک,کودک','home slide,nursery,kids','وسایل بازی خانگی','Home Play Equipment','NH-SLD-BEAR','',1,
     'سرسره خانگی کودک | پروشات','سرسره پلاستیکی خانگی کودک',
     'Bear Home Slide for Kids | Proshut','Plastic home slide for children');
 
@@ -537,7 +537,7 @@ seedIfEmpty('products', () => {
     '<p>Fiberglass panels with polyurethane grips. Can be installed indoors and outdoors.</p>',
     'ارتفاع|3 متر|عرض|2.5 متر|جنس پنل|فایبرگلاس|دستگیره|پلی‌اورتان|استاندارد|EN 12572',
     'Height|3 m|Width|2.5 m|Panel Material|Fiberglass|Grips|Polyurethane|Standard|EN 12572',
-    'صخره نوردی,دیوار صعود,ورزشی','وسایل بازی کودکان','CL-WALL-3M','',1,
+    'صخره نوردی,دیوار صعود,ورزشی','climbing wall,climbing,sports','وسایل بازی کودکان','Children Play Equipment','CL-WALL-3M','',1,
     'دیوار صخره‌نوردی | پروشات','دیوار صخره‌نوردی مصنوعی',
     '3m Artificial Climbing Wall | Proshut','3-meter artificial climbing wall');
 
@@ -552,7 +552,7 @@ seedIfEmpty('products', () => {
     '<p>EPDM flooring available in various colors and patterns. Shock-absorbing and anti-slip.</p>',
     'جنس|EPDM گرانولی|ضخامت|2 تا 5 سانتی‌متر|استاندارد|EN 1177|ضد لغزش|بله|مقاوم UV|بله',
     'Material|EPDM Granular|Thickness|2 to 5 cm|Standard|EN 1177|Anti-slip|Yes|UV Resistant|Yes',
-    'کفپوش ایمنی,EPDM,گرانولی,پارک','کفپوش ایمنی','FL-GR-EPDM','',1,
+    'کفپوش ایمنی,EPDM,گرانولی,پارک','safety flooring,EPDM,granular,park','کفپوش ایمنی','Safety Flooring','FL-GR-EPDM','',1,
     'کفپوش گرانولی EPDM | پروشات','کفپوش ایمنی گرانولی EPDM',
     'EPDM Granular Safety Flooring | Proshut','EPDM granular safety flooring');
 
@@ -567,7 +567,7 @@ seedIfEmpty('products', () => {
     '<p>High-density EVA foam. Puzzle connection system, detachable.</p>',
     'ابعاد|100x100 cm|ضخامت|2 تا 4 cm|جنس|EVA|اتصال|پازلی|تحمل ضربه|بالا',
     'Dimensions|100x100 cm|Thickness|2 to 4 cm|Material|EVA|Connection|Puzzle-lock|Impact Absorption|High',
-    'تاتامی,کفپوش,فوم,EVA','کفپوش ایمنی','FL-TAT-100','',1,
+    'تاتامی,کفپوش,فوم,EVA','tatami,flooring,foam,EVA','کفپوش ایمنی','Safety Flooring','FL-TAT-100','',1,
     'کفپوش تاتامی | پروشات','کفپوش تاتامی ایمنی',
     '1x1m Tatami Safety Floor | Proshut','Interlocking EVA tatami safety flooring');
 
@@ -582,7 +582,7 @@ seedIfEmpty('products', () => {
     '<p>8mm PVC sports flooring. Suitable for basketball, volleyball, and badminton.</p>',
     'ضخامت|8 میلیمتر|جنس|PVC|عرض رول|1.5 متر|ضد لغزش|بله|کاربری|سالن ورزشی',
     'Thickness|8 mm|Material|PVC|Roll Width|1.5 m|Anti-slip|Yes|Application|Sports Hall',
-    'کفپوش ورزشی,PVC,سالن ورزشی','کفپوش ایمنی','FL-SP-8MM','',1,
+    'کفپوش ورزشی,PVC,سالن ورزشی','sports flooring,PVC,sports hall','کفپوش ایمنی','Safety Flooring','FL-SP-8MM','',1,
     'کفپوش ورزشی سالنی | پروشات','کفپوش ورزشی PVC سالنی',
     '8mm Indoor Sports Flooring | Proshut','PVC indoor sports flooring 8mm');
 
@@ -597,7 +597,7 @@ seedIfEmpty('products', () => {
     '<p>High-resilience PE monofilament yarn. Suitable for professional and training football fields.</p>',
     'ارتفاع نخ|50 میلیمتر|نوع نخ|مونوفیلامنت PE|بکینگ|PU|دانسیته|10500 نخ/m²|عرض رول|4 متر',
     'Yarn Height|50 mm|Yarn Type|Monofilament PE|Backing|PU|Density|10,500 yarns/m²|Roll Width|4 m',
-    'چمن مصنوعی,فوتبالی,FIFA,مونوفیلامنت','چمن مصنوعی','AG-FB-50MM','',1,
+    'چمن مصنوعی,فوتبالی,FIFA,مونوفیلامنت','artificial grass,football,FIFA,monofilament','چمن مصنوعی','Artificial Grass','AG-FB-50MM','',1,
     'چمن مصنوعی فوتبالی ۵۰mm | پروشات','چمن مصنوعی فوتبالی مونوفیلامنت',
     '50mm Football Artificial Grass | Proshut','50mm monofilament football artificial grass');
 
@@ -612,7 +612,7 @@ seedIfEmpty('products', () => {
     '<p>Blend of green and brown yarns for a natural look. UV and rain resistant.</p>',
     'ارتفاع نخ|25 میلیمتر|جنس|PE + PP|عرض رول|2 متر|مقاوم UV|بله|زهکشی|دارد',
     'Yarn Height|25 mm|Material|PE + PP|Roll Width|2 m|UV Resistant|Yes|Drainage|Yes',
-    'چمن تزیینی,فضای سبز,بالکن,حیاط','چمن مصنوعی','AG-DC-25MM','',1,
+    'چمن تزیینی,فضای سبز,بالکن,حیاط','decorative grass,landscaping,balcony,yard','چمن مصنوعی','Artificial Grass','AG-DC-25MM','',1,
     'چمن تزیینی ۲۵mm | پروشات','چمن مصنوعی تزیینی ۲۵ میلیمتر',
     '25mm Decorative Artificial Grass | Proshut','25mm decorative artificial grass');
 });
