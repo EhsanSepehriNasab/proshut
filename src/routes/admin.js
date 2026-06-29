@@ -98,6 +98,7 @@ router.post('/products/:id/edit', requireAuth, upload.fields([{ name: 'image', m
 });
 
 router.post('/products/:id/delete', requireAuth, (req, res) => {
+  db.prepare('DELETE FROM product_comments WHERE product_id=?').run(req.params.id);
   db.prepare('DELETE FROM products WHERE id=?').run(req.params.id);
   res.redirect('/admin/products');
 });
