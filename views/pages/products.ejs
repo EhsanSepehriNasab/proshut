@@ -306,6 +306,7 @@ document.addEventListener('click', function(e) {
             html += '</div>';
         }
         cards.innerHTML = html;
+        if (typeof initProductImages === 'function') initProductImages(cards);
 
         // Scroll to products with offset for sticky navbar
         var area = document.getElementById('productsArea');

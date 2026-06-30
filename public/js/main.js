@@ -320,6 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // ── Init swipers & other per-page widgets ──
 function initDynamicWidgets() {
+  if (typeof initProductImages === 'function') initProductImages();
   if (document.querySelector('.heroSwiper')) {
     new Swiper('.heroSwiper', {
       loop: true,
